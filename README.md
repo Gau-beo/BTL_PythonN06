@@ -40,7 +40,7 @@
 19. `Khang_nuoc_bui` (String): Tiêu chuẩn bảo vệ (VD: IP68, IP54). Điền "Không" nếu không hỗ trợ.
 20. `Cong_ket_noi` (String): Loại cổng sạc và trạng thái jack tai nghe (VD: Type-C, Không jack 3.5mm).
 
-Vài lưu ý nhỏ:
+Lưu ý:
 - Mỗi dòng là một phiên bản bộ nhớ cụ thể (ví dụ 12GB/256GB), tương ứng với một trang sản phẩm trên web.
 - Ô nào không có thông tin thì ghi `N/a` (đề của cô yêu cầu vậy). Khi đọc file bằng pandas nhớ thêm `na_values=["N/a"]` để cột số không bị hiểu thành chữ.
 - Đây là danh sách cột bản đầu. Khi thu thập xong, cần thiết sẽ bổ sung thêm cột (camera, sạc, tần số quét, ...) và cập nhật lại ở đây.
