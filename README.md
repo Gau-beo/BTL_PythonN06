@@ -10,13 +10,35 @@
 ## Quy ước dữ liệu
 Để code của mọi người ghép lại không bị lỗi, file dữ liệu thật và `sample.csv` dùng chung tên cột và kiểu dữ liệu dưới đây. Cần thêm hoặc đổi cột thì nhắn trong nhóm trước, đừng tự đổi.
 
-1. `Ten_may` (string): Tên của thiết bị ví dụ như Samsung Galaxy S24 Ultra 12GB/256GB
-2. `Hang` (string): Nhà sản xuất của thiết bị ví dụ như Samsung, Apple, Xiaomi
-3. `Gia_ban` (integer): Giá tính bằng VND không có dấu chấm hoặc phẩy ví dụ như 33990000
-4. `Man_hinh` (float): Kích thước màn hình tính bằng inch ví dụ như 6.8
-5. `RAM` (integer): Dung lượng RAM tính bằng GB ví dụ như 12
-6. `ROM` (integer): Dung lượng bộ nhớ trong tính bằng GB ví dụ như 256
-7. `Pin` (integer): Dung lượng pin tính bằng mAh ví dụ như 5000
+### 1. Định danh & Phân loại
+1. `Ten_may` (String): Tên đầy đủ của thiết bị (VD: Samsung Galaxy S24 Ultra).
+2. `Hang` (String): Nhà sản xuất thiết bị (VD: Samsung, Apple, Xiaomi).
+3. `Gia_ban` (Integer): Giá thiết bị tính bằng VNĐ, không chứa dấu phân cách (VD: 33990000).
+4. `He_dieu_hanh` (String): Nền tảng hệ điều hành mặc định (VD: Android 14, iOS 17).
+
+### 2. Cấu hình phần cứng
+5. `Chipset` (String): Tên bộ vi xử lý (VD: Snapdragon 8 Gen 3).
+6. `RAM` (Integer): Dung lượng bộ nhớ RAM tính bằng GB (VD: 12).
+7. `ROM` (Integer): Dung lượng bộ nhớ trong tính bằng GB (VD: 256).
+8. `Ho_tro_5G` (Integer): Trạng thái hỗ trợ mạng 5G (1: Có hỗ trợ, 0: Không hỗ trợ).
+9. `Cong_nghe_pin` (String): Các công nghệ pin đi kèm (VD: Sạc nhanh 45W, Li-Po).
+
+### 3. Màn hình hiển thị
+10. `Kich_thuoc_man` (Float): Kích thước đường chéo màn hình tính bằng inch (VD: 6.8).
+11. `Tam_nen` (String): Công nghệ tấm nền màn hình (VD: Dynamic AMOLED 2X, IPS LCD).
+12. `Do_phan_giai` (String): Tiêu chuẩn độ phân giải (VD: 2K+, Full HD+).
+13. `Do_sang_nits` (Integer): Độ sáng tối đa tính bằng nits (VD: 2600).
+
+### 4. Hệ thống Camera
+14. `Cam_sau_MP` (Float): Độ phân giải của camera chính phía sau tính bằng Megapixel (VD: 200.0).
+15. `Cam_truoc_MP` (Float): Độ phân giải của camera selfie tính bằng Megapixel (VD: 12.0).
+
+### 5. Thiết kế & Kết nối
+16. `Kich_thuoc` (String): Kích thước tổng thể Dài x Ngang x Dày (VD: Dài 162.3 mm - Ngang 79 mm - Dày 8.6 mm).
+17. `Khoi_luong` (Integer): Trọng lượng thiết bị tính bằng gram (VD: 232).
+18. `Chat_lieu` (String): Vật liệu cấu thành (VD: Khung Titan & Mặt lưng kính cường lực).
+19. `Khang_nuoc_bui` (String): Tiêu chuẩn bảo vệ (VD: IP68, IP54). Điền "Không" nếu không hỗ trợ.
+20. `Cong_ket_noi` (String): Loại cổng sạc và trạng thái jack tai nghe (VD: Type-C, Không jack 3.5mm).
 
 Vài lưu ý nhỏ:
 - Mỗi dòng là một phiên bản bộ nhớ cụ thể (ví dụ 12GB/256GB), tương ứng với một trang sản phẩm trên web.
