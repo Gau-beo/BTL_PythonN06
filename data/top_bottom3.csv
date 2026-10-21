@@ -1,0 +1,49 @@
+﻿Thuoc_tinh,Nhom,Thu_hang,Ten_may,Hang,Gia_tri
+Gia_ban,Cao_nhat,1,Samsung Galaxy Z Fold5,Samsung,62832860
+Gia_ban,Cao_nhat,2,Samsung Galaxy Z Fold6,Samsung,54455117
+Gia_ban,Cao_nhat,3,Honor Magic V2 RSR Porsche Design,Honor,52360891
+Gia_ban,Thap_nhat,1,Realme C2s,Realme,837774
+Gia_ban,Thap_nhat,2,Itel A25,Itel,1045123
+Gia_ban,Thap_nhat,3,Itel A33,Itel,1128901
+RAM,Cao_nhat,1,Honor Magic6 RSR Porsche Design,Honor,24
+RAM,Cao_nhat,2,Honor Magic7 RSR Porsche Design,Honor,24
+RAM,Cao_nhat,3,Realme GT5 240W,Realme,24
+RAM,Thap_nhat,1,Itel A25,Itel,1
+RAM,Thap_nhat,2,Itel A33,Itel,1
+RAM,Thap_nhat,3,Itel Alpha,Itel,1
+ROM,Cao_nhat,1,Honor Magic V2 RSR Porsche Design,Honor,1024
+ROM,Cao_nhat,2,Honor Magic6 RSR Porsche Design,Honor,1024
+ROM,Cao_nhat,3,Honor Magic7 RSR Porsche Design,Honor,1024
+ROM,Thap_nhat,1,Itel A33,Itel,8
+ROM,Thap_nhat,2,Nokia 2,Nokia,8
+ROM,Thap_nhat,3,Nokia 2.1,Nokia,8
+Kich_thuoc_man,Cao_nhat,1,Xiaomi Pad 6S Pro 12.4,Xiaomi,12.4
+Kich_thuoc_man,Cao_nhat,2,Xiaomi Pad 6,Xiaomi,11
+Kich_thuoc_man,Cao_nhat,3,Samsung Galaxy Tab S5e,Samsung,10.5
+Kich_thuoc_man,Thap_nhat,1,Apple iPhone SE,Apple,4
+Kich_thuoc_man,Thap_nhat,2,Samsung Galaxy J1 Mini Prime,Samsung,4
+Kich_thuoc_man,Thap_nhat,3,Samsung Z2,Samsung,4
+Do_sang_nits,Cao_nhat,1,Vivo iQOO 15 Ultra,Vivo,8000
+Do_sang_nits,Cao_nhat,2,Honor 600e,Honor,6500
+Do_sang_nits,Cao_nhat,3,Honor Play11 Plus,Honor,6500
+Do_sang_nits,Thap_nhat,1,Xiaomi Redmi 9i,Xiaomi,270
+Do_sang_nits,Thap_nhat,2,Motorola Moto E7 Power,Motorola,380
+Do_sang_nits,Thap_nhat,3,Motorola Moto E7i Power,Motorola,380
+Cam_sau_MP,Cao_nhat,1,Honor 400,Honor,200
+Cam_sau_MP,Cao_nhat,2,Honor 90,Honor,200
+Cam_sau_MP,Cao_nhat,3,Oppo Find N6,Oppo,200
+Cam_sau_MP,Thap_nhat,1,Itel A25,Itel,5
+Cam_sau_MP,Thap_nhat,2,Itel A33,Itel,5
+Cam_sau_MP,Thap_nhat,3,Nokia C01 Plus,Nokia,5
+Cam_truoc_MP,Cao_nhat,1,Motorola Edge 30 Pro,Motorola,60
+Cam_truoc_MP,Cao_nhat,2,Motorola Edge+ (2023),Motorola,60
+Cam_truoc_MP,Cao_nhat,3,Motorola Moto X40,Motorola,60
+Cam_truoc_MP,Thap_nhat,1,Samsung Galaxy J1 Mini Prime,Samsung,0.3
+Cam_truoc_MP,Thap_nhat,2,Samsung Z2,Samsung,0.3
+Cam_truoc_MP,Thap_nhat,3,Apple iPhone SE,Apple,1.2
+Khoi_luong,Cao_nhat,1,Xiaomi Pad 6S Pro 12.4,Xiaomi,590
+Khoi_luong,Cao_nhat,2,Xiaomi Pad 6,Xiaomi,490
+Khoi_luong,Cao_nhat,3,Samsung Galaxy Tab S5e,Samsung,400
+Khoi_luong,Thap_nhat,1,Apple iPhone SE,Apple,113
+Khoi_luong,Thap_nhat,2,Itel A33,Itel,123
+Khoi_luong,Thap_nhat,3,Samsung Galaxy J1 Mini Prime,Samsung,126
