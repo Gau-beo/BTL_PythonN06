@@ -1,15 +1,3 @@
-"""Ước lượng giá điện thoại (Nhóm 06) - [GĐ2] Code AI Ước lượng giá.
-
-Đầu vào : data/data_clean.csv (Thẻ 3). Nếu chưa có sẽ dùng data/sample.csv.
-Đầu ra  : src/phone_price_model.pkl  (mô hình dự đoán giá VNĐ)
-          src/model_meta.json        (feature, dropdown, khoảng giá cho form web)
-          src/model_metrics.csv      (bảng đánh giá các mô hình)
-          figures/*.png              (biểu đồ đánh giá)
-
-Chạy từ bất kỳ đâu:
-    python src/train_model.py
-    python src/train_model.py duong_dan/file.csv     # chỉ định file csv khác
-"""
 import json
 import re
 import sys
