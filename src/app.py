@@ -13,7 +13,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "sample.csv"
+DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "data_clean.csv"
 
 
 # ==================== GIAO DIỆN ====================
@@ -290,15 +290,16 @@ with st.sidebar:
     st.markdown("#### KHÔNG GIAN LÀM VIỆC")
 
     page = st.radio(
-        "Điều hướng",
-        [
-            "Tổng quan",
-            "Dữ liệu điện thoại",
-            "Phân tích thống kê",
-            "K-means / PCA / Radar",
-            "Ước lượng giá",
-        ],
-        label_visibility="collapsed",
+    "Điều hướng",
+    [
+        "Tổng quan",
+        "Dữ liệu điện thoại",
+        "Phân tích thống kê",
+        "K-means / PCA / Radar",
+        "Ước lượng giá",
+    ],
+    horizontal=True,
+    label_visibility="collapsed",
     )
 
     st.markdown("---")
@@ -465,6 +466,10 @@ if page == "Tổng quan":
         else 0
     )
 
+    price_series = price_series[
+    price_series.between(1, 200_000_000)
+    ]
+
     avg_price = price_series.mean() if not price_series.empty else None
     median_price = price_series.median() if not price_series.empty else None
 
@@ -511,6 +516,7 @@ if page == "Tổng quan":
             chart_df = (
                 filtered[["Ten_may", "Gia_ban"]]
                 .dropna()
+                .query("Gia_ban > 0 and Gia_ban <= 200000000")
                 .sort_values("Gia_ban", ascending=False)
                 .head(12)
                 .set_index("Ten_may")
