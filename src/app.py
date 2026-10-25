@@ -5,7 +5,11 @@ import streamlit as st
 
 st.set_page_config(page_title='PhoneHub | Nhóm 06', page_icon='📱', layout='wide')
 BASE_DIR = Path(__file__).resolve().parent.parent
-DATA_CANDIDATES = [BASE_DIR/'data'/'data_clean.csv', BASE_DIR/'data'/'dien_thoai_viet_nam_1021.csv', BASE_DIR/'data'/'MockData'/'dien_thoai_viet_nam_1021.csv']
+DATA_CANDIDATES = [
+    BASE_DIR/'data'/'dien_thoai_viet_nam_1021.csv',
+    BASE_DIR/'data'/'MockData'/'dien_thoai_viet_nam_1021.csv',
+    BASE_DIR/'data'/'data_clean.csv'
+]
 IMAGE_DIR = BASE_DIR/'assets'/'phones'
 
 
@@ -460,9 +464,23 @@ elif page=='K-means / PCA / Radar':
             from sklearn.impute import SimpleImputer
             from sklearn.preprocessing import StandardScaler
             import matplotlib.pyplot as plt
-            analysis=filtered[['Ten_may','Hang']+features].copy()
-            for f in features: analysis[f]=pd.to_numeric(analysis[f],errors='coerce')
-            analysis=analysis.dropna(subset=features,how='all')
+            import numpy as np
+            analysis = filtered[['Ten_may', 'Hang'] + features].copy()
+
+            for f in features:
+                analysis[f] = pd.to_numeric(analysis[f], errors='coerce')
+
+            
+            analysis = analysis.replace([np.inf, -np.inf], np.nan)
+            analysis = analysis.dropna(subset=features)
+
+            # Loại giá trị RAM và ROM bất thường
+            if 'ROM' in features:
+                analysis = analysis[analysis['ROM'].between(1, 2048)]
+
+            if 'RAM' in features:
+                analysis = analysis[analysis['RAM'].between(1, 64)]
+
             if len(analysis)<k: st.warning('Số dòng hợp lệ ít hơn số cụm K.')
             else:
                 X=StandardScaler().fit_transform(SimpleImputer(strategy='median').fit_transform(analysis[features])); analysis['Cụm']=KMeans(n_clusters=k,random_state=42,n_init=10).fit_predict(X).astype(str); coords=PCA(n_components=2).fit_transform(X); analysis['PCA 1']=coords[:,0]; analysis['PCA 2']=coords[:,1]
@@ -497,7 +515,17 @@ elif page=='Ước lượng giá':
         train=df.dropna(subset=['Gia_ban']).copy(); candidates=[c for c in candidates if train[c].notna().sum()>2]
         if len(train)<15 or not candidates: st.info('Chưa đủ dữ liệu hợp lệ để huấn luyện. Cần ít nhất 15 mẫu có giá và thông số.')
         else:
-            cat=[c for c in candidates if train[c].dtype=='object']; num=[c for c in candidates if c not in cat]
+            cat = [
+                c for c in candidates
+                if (
+                    pd.api.types.is_object_dtype(train[c])
+                    or pd.api.types.is_string_dtype(train[c])
+                    or pd.api.types.is_bool_dtype(train[c])
+                    or isinstance(train[c].dtype, pd.CategoricalDtype)
+                )
+            ]
+
+            num = [c for c in candidates if c not in cat]
             prep=ColumnTransformer([('num',Pipeline([('imputer',SimpleImputer(strategy='median')),('scale',StandardScaler())]),num),('cat',Pipeline([('imputer',SimpleImputer(strategy='most_frequent')),('onehot',OneHotEncoder(handle_unknown='ignore'))]),cat)])
             model=Pipeline([('prep',prep),('regressor',RandomForestRegressor(n_estimators=160,random_state=42,min_samples_leaf=2))]); X=train[candidates]; y=train.Gia_ban
             if len(train)>=20:
