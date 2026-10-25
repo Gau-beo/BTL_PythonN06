@@ -14,7 +14,7 @@ THUOC_TINH = [
     "Khoi_luong",
 ]
 THU_MUC_DU_AN = Path(__file__).resolve().parents[1]
-FILE_DU_LIEU = THU_MUC_DU_AN / "data" / "dien_thoai_viet_nam_1021.csv"
+FILE_DU_LIEU = THU_MUC_DU_AN / "data" / "data_clean.csv"
 THU_MUC_KET_QUA = THU_MUC_DU_AN / "data"
 
 
