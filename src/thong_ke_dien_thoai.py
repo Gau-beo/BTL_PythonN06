@@ -8,7 +8,9 @@ THUOC_TINH = [
     "RAM",
     "ROM",
     "Kich_thuoc_man",
-    "Do_sang_nits",
+    "Dung_luong_pin",
+    "Cong_suat_sac_W",
+    "Tan_so_quet_Hz",
     "Cam_sau_MP",
     "Cam_truoc_MP",
     "Khoi_luong",
@@ -96,7 +98,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "input_csv", type=Path, nargs="?", default=FILE_DU_LIEU,
-        help="Duong dan CSV dau vao; mac dinh: data/dien_thoai_viet_nam_1021.csv.",
+        help="Duong dan CSV dau vao; mac dinh: data/data_clean.csv.",
     )
     parser.add_argument(
         "-o", "--output-dir", type=Path, default=THU_MUC_KET_QUA,
