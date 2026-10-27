@@ -16,231 +16,77 @@ IMAGE_DIR = BASE_DIR/'assets'/'phones'
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap');
-
-:root {
-    --navy: #142D4E;
-    --teal: #0D9488;
-    --bg: #F6F8FC;
-    --text: #192B43;
-    --muted: #6B7C93;
-    --border: #E1E8F0;
-}
-
-html, body, [class*="css"] {
-    font-family: 'Be Vietnam Pro', sans-serif;
-}
-
-.stApp {
-    background: var(--bg);
-    color: var(--text);
-}
-
-.block-container {
-    max-width: 1500px;
-    padding-top: 1.5rem;
-    padding-bottom: 3rem;
-}
-
-/* Sidebar */
-section[data-testid="stSidebar"] {
-    background: var(--navy);
-    border-right: 1px solid #243F5E;
-}
-
-section[data-testid="stSidebar"] * {
-    color: #F1F6FC;
-}
-
-section[data-testid="stSidebar"] [data-testid="stCaptionContainer"] {
-    color: #B6C7DA;
-}
-
-/* Hero banner */
-.hero {
-    padding: 34px;
-    border-radius: 22px;
-    color: white;
-    background: linear-gradient(120deg, #142D4E 0%, #18516B 58%, #0D9488 100%);
-    margin-bottom: 28px;
-    box-shadow: 0 12px 30px rgba(20, 45, 78, 0.12);
-}
-
-.hero h1 {
-    color: white;
-    font-size: clamp(28px, 3vw, 40px);
-    font-weight: 800;
-    margin: 10px 0;
-    line-height: 1.25;
-}
-
-.hero p {
-    color: #E1F1F5;
-    font-size: 14px;
-    line-height: 1.8;
-    margin: 0;
-}
-
-/* Section headings */
-.eyebrow {
-    color: var(--teal);
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 1.6px;
-    margin-bottom: 7px;
-}
-
-.section-title {
-    font-size: 23px;
-    font-weight: 800;
-    margin-bottom: 5px;
-    color: var(--navy);
-}
-
-.section-caption {
-    color: var(--muted);
-    font-size: 13px;
-    margin-bottom: 18px;
-}
-
-/* Statistic cards */
-.metric-card {
-    background: #FFFFFF;
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 20px;
-    min-height: 118px;
-    box-shadow: 0 4px 14px rgba(20, 45, 78, 0.035);
-}
-
-.metric-label {
-    color: var(--muted);
-    font-size: 11px;
-    font-weight: 700;
-    margin-bottom: 9px;
-}
-
-.metric-value {
-    color: var(--navy);
-    font-size: clamp(19px, 1.8vw, 27px);
-    font-weight: 800;
-    overflow-wrap: anywhere;
-}
-
-.metric-foot {
-    color: var(--teal);
-    font-size: 11px;
-    margin-top: 8px;
-}
-
-/* Product cards */
-div[data-testid="stVerticalBlockBorderWrapper"] {
-    border-color: var(--border);
-    border-radius: 18px;
-}
-
-.product-brand {
-    font-size: 11px;
-    font-weight: 800;
-    color: var(--teal);
-    letter-spacing: .7px;
-    text-transform: uppercase;
-}
-
-.product-name {
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 1.5;
-    min-height: 44px;
-    margin: 8px 0 4px;
-    color: var(--navy);
-}
-
-.product-price {
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--teal);
-    margin: 8px 0;
-}
-
-.product-spec {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.7;
-}
-
-/* Inputs and dropdowns */
-.stApp input,
-.stApp textarea,
-.stApp [data-baseweb="select"] > div {
-    background-color: #FFFFFF !important;
-    color: var(--text) !important;
-    border-color: #D8E1EC !important;
-    border-radius: 10px !important;
-}
-
-.stApp input::placeholder,
-.stApp textarea::placeholder {
-    color: #8795A8 !important;
-}
-
-.stApp label,
-.stApp [data-testid="stWidgetLabel"] p {
-    color: var(--text);
-    font-weight: 600;
-}
-
-/* Buttons */
-.stButton > button,
-.stDownloadButton > button {
-    background: #FFFFFF;
-    color: var(--navy);
-    border: 1px solid #D8E1EC;
-    border-radius: 11px;
-    font-weight: 700;
-    transition: all .2s ease;
-}
-
-.stButton > button:hover,
-.stDownloadButton > button:hover {
-    background: #E8F7F5;
-    color: #087F75;
-    border-color: #81CDC4;
-}
-
-/* Primary actions */
-.stButton > button[kind="primary"],
-button[kind="primary"] {
-    background: var(--teal);
-    color: #FFFFFF;
-    border-color: var(--teal);
-}
-
-.stButton > button[kind="primary"]:hover,
-button[kind="primary"]:hover {
-    background: #087F75;
-    color: #FFFFFF;
-}
-
-/* Slider and links */
-.stSlider [data-testid="stTickBar"] {
-    color: var(--muted);
-}
-
-a {
-    color: var(--teal);
-}
-
-/* Data tables */
-.stDataFrame {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-/* Dividers */
-hr {
-    border-color: var(--border);
-}
+:root{--ink:#111C32;--blue:#245BDB;--blue2:#3978FF;--blue-soft:#EAF0FF;--mint:#15B8A6;--bg:#F4F6FA;--muted:#738096;--line:#E4E9F2;--white:#FFF;}
+html,body,[class*="css"]{font-family:'Be Vietnam Pro',sans-serif;color:var(--ink)}
+.stApp{background:var(--bg)}
+.block-container{max-width:1500px;padding-top:1.25rem;padding-bottom:3rem}
+/* sidebar */
+section[data-testid="stSidebar"]{background:#101B31;border-right:1px solid #23314A}
+section[data-testid="stSidebar"] *{color:#F4F7FC}
+section[data-testid="stSidebar"] [data-testid="stCaptionContainer"]{color:#AEBBD0}
+section[data-testid="stSidebar"] [role="radiogroup"]{gap:5px}
+section[data-testid="stSidebar"] [role="radiogroup"] label{padding:10px 12px;border-radius:11px;border:1px solid transparent;transition:.18s}
+section[data-testid="stSidebar"] [role="radiogroup"] label:hover{background:#1C2A45;border-color:#2B4167}
+section[data-testid="stSidebar"] [data-testid="stWidgetLabel"] p{color:#D7E0EF;font-size:12px;font-weight:700}
+section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] h2{font-size:25px;letter-spacing:-.8px}
+section[data-testid="stSidebar"] hr{border-color:#293750}
+/* masthead */
+.store-topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:7px 2px 19px;margin-bottom:4px}
+.store-brand{display:flex;align-items:center;gap:11px}
+.store-logo{width:43px;height:43px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#245BDB,#16B8A6);color:white;font-size:24px;box-shadow:0 8px 18px #245bdb2b}
+.store-name{font-weight:800;font-size:22px;letter-spacing:-.8px;color:#111C32;line-height:1.1}
+.store-sub{font-size:9px;font-weight:800;letter-spacing:1.6px;color:#7A879B;margin-top:5px}
+.store-pill{padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:white;color:#5B6880;font-size:11px;font-weight:700;white-space:nowrap}
+/* hero */
+.hero{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(200px,.75fr);gap:20px;align-items:center;padding:clamp(26px,4vw,48px);border-radius:28px;color:white;background:radial-gradient(circle at 83% 15%,#477EFF 0%,transparent 30%),linear-gradient(120deg,#101B31 0%,#173B83 58%,#245BDB 100%);margin-bottom:25px;box-shadow:0 20px 45px rgba(21,48,105,.16)}
+.hero:before{content:'';position:absolute;width:330px;height:330px;border:1px solid #ffffff18;border-radius:50%;right:-100px;top:-145px;box-shadow:0 0 0 35px #ffffff08,0 0 0 70px #ffffff05;pointer-events:none}
+.hero-copy,.hero-visual{position:relative;z-index:1}
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border:1px solid #ffffff30;background:#ffffff12;border-radius:999px;color:#DCE7FF;font-size:10px;font-weight:800;letter-spacing:1.5px}
+.hero h1{color:#fff;font-size:clamp(30px,3.7vw,49px);font-weight:800;letter-spacing:-1.7px;line-height:1.12;margin:19px 0 14px;max-width:680px}
+.hero p{color:#DCE7F9;font-size:14px;line-height:1.9;margin:0;max-width:620px}
+.hero-note{margin-top:24px;display:flex;align-items:center;gap:9px;color:#E5EDFF;font-size:11px;font-weight:600}
+.hero-note span{width:7px;height:7px;border-radius:50%;background:#45E0C2;box-shadow:0 0 0 5px #45e0c21c}
+.hero-visual{min-height:220px;display:flex;align-items:center;justify-content:center}
+.phone-art{position:relative;width:132px;height:232px;border-radius:29px;background:linear-gradient(145deg,#F9FBFF,#B9C9E7);border:5px solid #DFE8FA;box-shadow:18px 24px 35px #07152f70;transform:rotate(9deg)}
+.phone-art:before{content:'';position:absolute;inset:7px;border-radius:21px;background:radial-gradient(circle at 75% 25%,#70C6FF 0%,transparent 22%),radial-gradient(circle at 35% 70%,#9C8BFF 0%,transparent 35%),linear-gradient(145deg,#0F1D3A,#245BDB 55%,#18B9AC)}
+.phone-art:after{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:43px;height:10px;border-radius:999px;background:#111C32}
+.phone-orbit{position:absolute;width:188px;height:188px;border:1px solid #ffffff45;border-radius:50%;transform:rotate(-18deg)}
+.hero-tag{position:absolute;right:2%;bottom:18%;background:#fff;color:#15213A;border:1px solid #ffffff80;padding:11px 14px;border-radius:14px;box-shadow:0 12px 25px #07152f40;font-size:11px;font-weight:800;transform:rotate(-4deg)}
+/* headings */
+.eyebrow{color:var(--blue);font-size:10px;font-weight:800;letter-spacing:1.7px;margin-bottom:8px}
+.section-title{font-size:clamp(21px,2vw,28px);font-weight:800;letter-spacing:-.8px;margin-bottom:5px;color:var(--ink)}
+.section-caption{color:var(--muted);font-size:13px;line-height:1.75;margin-bottom:18px}
+/* metrics */
+.metric-card{position:relative;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 21px;min-height:123px;box-shadow:0 7px 22px rgba(17,28,50,.035)}
+.metric-card:after{content:'';position:absolute;width:64px;height:64px;border-radius:50%;right:-26px;top:-27px;background:var(--blue-soft)}
+.metric-label{color:#7B879A;font-size:10px;font-weight:800;letter-spacing:.9px;margin-bottom:12px;position:relative;z-index:1}
+.metric-value{color:var(--ink);font-size:clamp(22px,2vw,30px);font-weight:800;letter-spacing:-.8px;overflow-wrap:anywhere;position:relative;z-index:1}
+.metric-foot{color:var(--blue);font-size:11px;font-weight:600;margin-top:8px;position:relative;z-index:1}
+/* product cards */
+div[data-testid="stVerticalBlockBorderWrapper"]{background:#fff;border-color:var(--line);border-radius:20px;box-shadow:0 5px 20px rgba(17,28,50,.035);transition:transform .2s ease,box-shadow .2s ease}
+div[data-testid="stVerticalBlockBorderWrapper"]:hover{box-shadow:0 15px 34px rgba(17,28,50,.10);transform:translateY(-2px)}
+div[data-testid="stVerticalBlockBorderWrapper"] [data-testid="stImage"]{background:#F5F7FB;border-radius:15px;padding:7px}
+div[data-testid="stImage"] img{border-radius:13px;object-fit:contain}
+.product-brand{font-size:10px;font-weight:800;color:var(--blue);letter-spacing:1.1px;text-transform:uppercase;margin-top:7px}
+.product-name{font-size:15px;font-weight:700;line-height:1.5;min-height:45px;margin:7px 0 3px;color:var(--ink)}
+.product-price{font-size:22px;font-weight:800;color:#174BC1;margin:8px 0;letter-spacing:-.6px}
+.page-indicator{text-align:center;padding:10px 14px;border:1px solid #DCE4F0;border-radius:12px;background:#FFFFFF;color:#748198;font-size:12px;letter-spacing:1.2px;font-weight:700;box-shadow:0 4px 14px rgba(20,40,80,.04)}
+.page-indicator strong{color:#245BDB;font-size:18px;margin:0 7px;letter-spacing:0}
+.page-indicator span{margin:0 5px;color:#A0AABC}
+.product-spec{font-size:11px;color:#6D7B91;line-height:1.8;min-height:24px;padding:8px 0;border-top:1px solid #EDF0F6}
+/* forms */
+.stApp input,.stApp textarea,.stApp [data-baseweb="select"]>div{background:#fff!important;color:var(--ink)!important;border-color:#DCE3EE!important;border-radius:11px!important}
+.stApp input::placeholder,.stApp textarea::placeholder{color:#8A96A8!important}
+.stApp label,.stApp [data-testid="stWidgetLabel"] p{color:var(--ink);font-weight:600}
+.stButton>button,.stDownloadButton>button{background:#fff;color:var(--ink);border:1px solid #DCE3EE;border-radius:11px;font-weight:700;min-height:43px;transition:all .18s ease}
+.stButton>button:hover,.stDownloadButton>button:hover{background:#EDF3FF;color:#174BC1;border-color:#AFC5FF}
+.stButton>button[kind="primary"],button[kind="primary"]{background:var(--blue);color:white;border-color:var(--blue);box-shadow:0 5px 12px #245bdb24}
+.stButton>button[kind="primary"]:hover,button[kind="primary"]:hover{background:#174BC1;color:white}
+a{color:var(--blue)}
+.stDataFrame{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+[data-testid="stAlert"]{border-radius:14px}
+hr{border-color:var(--line)}
+@media(max-width:760px){.store-topbar{padding-bottom:13px}.store-pill{display:none}.hero{grid-template-columns:1fr;padding:25px}.hero-visual{display:none}.hero h1{font-size:32px}.metric-card{padding:15px}}
 </style>
 """, unsafe_allow_html=True)
 
@@ -352,10 +198,11 @@ filtered=df.copy()
 if selected_brands: filtered=filtered[filtered['Hang'].isin(selected_brands)]
 if price_range: filtered=filtered[filtered['Gia_ban'].between(*price_range,inclusive='both')]
 
-st.markdown('''<div class="hero"><div style="font-size:11px;font-weight:800;letter-spacing:1.5px;color:#b8fff4">PHONEHUB · DATA · INSIGHTS</div><h1>Khám phá thế giới điện thoại</h1><p>Xem các mẫu máy theo thương hiệu, tìm kiếm cấu hình, tham khảo giá và khám phá kết quả phân tích dữ liệu của Nhóm 06.</p></div>''',unsafe_allow_html=True)
+st.markdown('<div class="store-topbar"><div class="store-brand"><div class="store-logo">⌁</div><div><div class="store-name">PhoneHub<span style="color:#245BDB">.</span></div><div class="store-sub">SMARTPHONE DISCOVERY & ANALYTICS</div></div></div><div class="store-pill">NHÓM 06&nbsp;&nbsp; · &nbsp;&nbsp;DỮ LIỆU ĐIỆN THOẠI</div></div>',unsafe_allow_html=True)
+st.markdown('''<section class="hero"><div class="hero-copy"><div class="hero-kicker">✦ &nbsp; PHONEHUB STORE / DISCOVER / COMPARE</div><h1>Công nghệ phù hợp.<br>Quyết định thông minh.</h1><p>Khám phá điện thoại theo thương hiệu, so sánh cấu hình và giá bán. Từ trải nghiệm sản phẩm đến phân tích dữ liệu — tất cả trong một không gian.</p><div class="hero-note"><span></span> Khám phá · So sánh · Phân tích</div></div><div class="hero-visual"><div class="phone-orbit"></div><div class="phone-art"></div><div class="hero-tag">SMARTPHONE<br><span style="color:#245BDB;font-size:15px">YOUR NEXT PICK</span></div></div></section>''',unsafe_allow_html=True)
 
 if page=='Khám phá điện thoại':
-    header('PHONE CATALOG / 01','Tất cả điện thoại theo thương hiệu','Chọn hãng, tìm tên máy và xem giá trên từng thẻ sản phẩm.')
+    header('01  /  THE COLLECTION','Khám phá bộ sưu tập','Tìm đúng mẫu máy theo tên, thương hiệu và ngân sách của bạn.')
     c1,c2,c3=st.columns([2,1,1]); search=c1.text_input('🔎 Tìm kiếm',placeholder='iPhone, Galaxy, Redmi...')
     brand=c2.selectbox('Thương hiệu',['Tất cả hãng']+sorted(filtered['Hang'].unique().tolist()))
     sort=c3.selectbox('Sắp xếp',['Mặc định','Giá thấp đến cao','Giá cao đến thấp','Tên A–Z'])
@@ -372,8 +219,30 @@ if page=='Khám phá điện thoại':
     st.write('')
     if catalog.empty: st.info('Không tìm thấy mẫu máy phù hợp. Thử đổi từ khóa hoặc bộ lọc.')
     else:
-        per_page=12; total=max(1,(len(catalog)+per_page-1)//per_page)
-        current=st.selectbox('Trang sản phẩm',range(1,total+1),format_func=lambda x:f'Trang {x}/{total}')
+        per_page = 12
+        total = max(1, (len(catalog) + per_page - 1) // per_page)
+        if 'catalog_page' not in st.session_state:
+            st.session_state['catalog_page'] = 1
+        # Keep the current page valid when search/filter results shrink.
+        st.session_state['catalog_page'] = min(max(1, st.session_state['catalog_page']), total)
+        current = st.session_state['catalog_page']
+
+        # Pagination bar with previous/next arrows and a centered page indicator.
+        prev_col, page_col, next_col = st.columns([1, 2, 1], vertical_alignment='center')
+        with prev_col:
+            if st.button('← Trang trước', key='catalog_prev', disabled=current <= 1, use_container_width=True):
+                st.session_state['catalog_page'] = max(1, current - 1)
+                st.rerun()
+        with page_col:
+            st.markdown(
+                f'<div class="page-indicator">TRANG <strong>{current}</strong><span>/</span>{total}</div>',
+                unsafe_allow_html=True,
+            )
+        with next_col:
+            if st.button('Trang sau →', key='catalog_next', disabled=current >= total, use_container_width=True):
+                st.session_state['catalog_page'] = min(total, current + 1)
+                st.rerun()
+
         shown=list(catalog.iloc[(current-1)*per_page:current*per_page].iterrows())
         for start in range(0,len(shown),3):
             cols=st.columns(3,gap='medium')
@@ -383,7 +252,7 @@ if page=='Khám phá điện thoại':
         st.download_button('⬇ Tải danh sách đang lọc CSV',catalog.drop(columns=['Gia_ban_goc'],errors='ignore').to_csv(index=False).encode('utf-8-sig'),'danh_sach_dien_thoai.csv','text/csv')
 
 elif page=='Chi tiết điện thoại':
-    header('PHONE DETAILS / 02','Chi tiết điện thoại','Thông tin chi tiết của một mẫu trong dữ liệu.')
+    header('02  /  PRODUCT DETAILS','Thông tin sản phẩm','Thông số kỹ thuật và giá bán của mẫu điện thoại bạn chọn.')
     names=sorted(df.Ten_may.unique().tolist()); default_name=st.session_state.get('selected_phone',names[0] if names else '')
     if names:
         name=st.selectbox('Chọn điện thoại',names,index=names.index(default_name) if default_name in names else 0); row=df[df.Ten_may==name].iloc[0]
@@ -398,7 +267,7 @@ elif page=='Chi tiết điện thoại':
             st.dataframe(detail.rename_axis('Thuộc tính').reset_index(name='Giá trị'),use_container_width=True,hide_index=True)
 
 elif page=='So sánh hai máy':
-    header('PHONE COMPARISON / 03','So sánh hai điện thoại','Đối chiếu giá bán và thông số kỹ thuật cạnh nhau.')
+    header('03  /  SIDE-BY-SIDE','Đặt hai lựa chọn lên bàn cân','So sánh giá và thông số kỹ thuật trong cùng một bảng.')
     names=sorted(df.Ten_may.unique().tolist())
     if len(names)>=2:
         ca,cb=st.columns(2)
@@ -422,7 +291,7 @@ elif page=='So sánh hai máy':
     else: st.info('Cần ít nhất hai mẫu điện thoại trong dữ liệu.')
 
 elif page=='Tổng quan':
-    header('DASHBOARD / 04','Tổng quan dữ liệu','Các chỉ số tổng hợp theo bộ lọc bên trái.')
+    header('04  /  MARKET SNAPSHOT','Toàn cảnh thị trường','Những chỉ số nổi bật từ bộ dữ liệu điện thoại hiện tại.')
     p=filtered.Gia_ban.dropna(); cols=st.columns(4)
     vals=[('MẪU ĐIỆN THOẠI',f'{filtered.Ten_may.nunique():,}','Số mẫu'),('THƯƠNG HIỆU',f'{filtered.Hang.nunique():,}','Số hãng'),('GIÁ TRUNG BÌNH',money(p.mean()) if not p.empty else '—','Giá hợp lệ'),('GIÁ TRUNG VỊ',money(p.median()) if not p.empty else '—','Giá hợp lệ')]
     for col,args in zip(cols,vals):
@@ -437,7 +306,7 @@ elif page=='Tổng quan':
     st.dataframe(filtered.drop(columns=['Gia_ban_goc'],errors='ignore').head(15),use_container_width=True,hide_index=True)
 
 elif page=='Phân tích thống kê':
-    header('STATISTICS / 05','Phân tích thống kê','Thống kê mô tả và so sánh giá bán.')
+    header('05  /  DATA INSIGHTS','Phân tích thống kê','Đọc phân bố giá và khác biệt giữa các thương hiệu.')
     p=filtered.Gia_ban.dropna()
     if p.empty: st.warning('Không có giá hợp lệ trong dữ liệu đã lọc.')
     else:
@@ -453,7 +322,7 @@ elif page=='Phân tích thống kê':
         st.dataframe(p.describe().to_frame('Gia_ban'),use_container_width=True)
 
 elif page=='K-means / PCA / Radar':
-    header('ADVANCED ANALYTICS / 06','K-means, PCA và Radar','Chạy phân cụm trên dữ liệu hiện tại để quan sát nhóm điện thoại.')
+    header('06  /  ADVANCED ANALYTICS','K-means · PCA · Radar','Khám phá các nhóm điện thoại và so sánh đặc trưng cấu hình.')
     candidates=[c for c in ['Gia_ban','RAM','ROM','Kich_thuoc_man','Do_sang_nits','Cam_sau_MP','Cam_truoc_MP','Khoi_luong'] if c in filtered.columns]
     features=st.multiselect('Thuộc tính phân cụm',candidates,default=[c for c in ['Gia_ban','RAM','ROM','Kich_thuoc_man'] if c in candidates]); k=st.slider('Số cụm K',2,6,3)
     if len(features)<2: st.info('Chọn ít nhất hai thuộc tính số.')
@@ -501,7 +370,7 @@ elif page=='K-means / PCA / Radar':
         except ImportError: st.error('Cài thư viện cần thiết bằng: pip install scikit-learn matplotlib')
 
 elif page=='Ước lượng giá':
-    header('PRICE ESTIMATOR / 07','Ước lượng giá điện thoại','Mô hình hồi quy thử nghiệm dựa trên dữ liệu có giá hợp lệ.')
+    header('07  /  PRICE INTELLIGENCE','Ước lượng giá điện thoại','Thử nghiệm mức giá dựa trên cấu hình và dữ liệu hiện có.')
     st.warning('Đây là mô hình thử nghiệm tự huấn luyện từ CSV hiện tại. Chất lượng dự đoán phụ thuộc mạnh vào độ sạch và số lượng dữ liệu.')
     try:
         from sklearn.compose import ColumnTransformer
