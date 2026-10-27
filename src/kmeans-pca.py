@@ -24,7 +24,6 @@ FEATURES = [
     "RAM",
     "ROM",
     "Kich_thuoc_man",
-    "Do_sang_nits",
     "Cam_sau_MP",
     "Cam_truoc_MP",
     "Khoi_luong",

@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
+from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 from pathlib import Path
 
@@ -12,13 +13,16 @@ features = [
     "RAM",
     "ROM",
     "Kich_thuoc_man",
-    "Do_sang_nits",
     "Cam_sau_MP",
     "Cam_truoc_MP",
     "Khoi_luong"
 ]
+
 X = df[features].apply(pd.to_numeric, errors='coerce')
 X = X.fillna(X.mean())
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
 
 wcss = []
 silhouette_scores = []
@@ -26,9 +30,9 @@ K_range = range(2, 8)
 
 for k in K_range:
     kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
-    kmeans.fit(X)
+    kmeans.fit(X_scaled)
     wcss.append(kmeans.inertia_)
-    silhouette_scores.append(silhouette_score(X, kmeans.labels_))
+    silhouette_scores.append(silhouette_score(X_scaled, kmeans.labels_))
 
 FIGURE_DIR = ROOT / "figures"
 FIGURE_DIR.mkdir(parents=True, exist_ok=True)
