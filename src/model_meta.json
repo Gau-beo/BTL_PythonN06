@@ -1,0 +1,203 @@
+{
+  "model_name": "Gradient Boosting",
+  "sklearn_version": "1.9.1",
+  "target": "Gia_ban",
+  "unit": "VND",
+  "currency_note": "Giá bán tại Bangladesh (BDT) quy đổi sang VNĐ, 1 BDT = 210 VNĐ. Không phải giá bán tại Việt Nam.",
+  "features": [
+    "RAM",
+    "ROM",
+    "Ho_tro_5G",
+    "Kich_thuoc_man",
+    "Tan_so_quet_Hz",
+    "Cam_sau_MP",
+    "Cam_truoc_MP",
+    "Khoi_luong",
+    "Dung_luong_pin",
+    "Cong_suat_sac_W",
+    "Hang",
+    "Chipset_dong",
+    "Tam_nen",
+    "Do_phan_giai"
+  ],
+  "numeric_features": [
+    "RAM",
+    "ROM",
+    "Ho_tro_5G",
+    "Kich_thuoc_man",
+    "Tan_so_quet_Hz",
+    "Cam_sau_MP",
+    "Cam_truoc_MP",
+    "Khoi_luong",
+    "Dung_luong_pin",
+    "Cong_suat_sac_W"
+  ],
+  "categorical_features": [
+    "Hang",
+    "Chipset_dong",
+    "Tam_nen",
+    "Do_phan_giai"
+  ],
+  "labels": {
+    "RAM": "RAM (GB)",
+    "ROM": "Bộ nhớ trong (GB)",
+    "Ho_tro_5G": "Hỗ trợ 5G (1 = có, 0 = không)",
+    "Kich_thuoc_man": "Kích thước màn hình (inch)",
+    "Tan_so_quet_Hz": "Tần số quét (Hz)",
+    "Cam_sau_MP": "Camera sau (MP)",
+    "Cam_truoc_MP": "Camera trước (MP)",
+    "Khoi_luong": "Khối lượng (g)",
+    "Dung_luong_pin": "Dung lượng pin (mAh)",
+    "Cong_suat_sac_W": "Công suất sạc (W)",
+    "Hang": "Hãng",
+    "Chipset_dong": "Dòng chip",
+    "Tam_nen": "Loại màn hình",
+    "Do_phan_giai": "Độ phân giải"
+  },
+  "choices": {
+    "Hang": [
+      "Apple",
+      "Honor",
+      "Infinix",
+      "Itel",
+      "Motorola",
+      "Nokia",
+      "Oppo",
+      "Realme",
+      "Samsung",
+      "TCL",
+      "Tecno",
+      "Vivo"
+    ],
+    "Chipset_dong": [
+      "Apple A",
+      "Dimensity 6",
+      "Dimensity 7",
+      "Dimensity 8",
+      "Dimensity 9",
+      "Exynos",
+      "Helio",
+      "Khac",
+      "Snapdragon 4",
+      "Snapdragon 6",
+      "Snapdragon 7",
+      "Snapdragon 8",
+      "Unisoc"
+    ],
+    "Tam_nen": [
+      "AMOLED",
+      "IPS LCD",
+      "LCD",
+      "OLED",
+      "TFT LCD"
+    ],
+    "Do_phan_giai": [
+      "2K+",
+      "FHD+",
+      "HD+"
+    ]
+  },
+  "defaults": {
+    "RAM": 8.0,
+    "ROM": 128.0,
+    "Ho_tro_5G": 1.0,
+    "Kich_thuoc_man": 6.7,
+    "Tan_so_quet_Hz": 120.0,
+    "Cam_sau_MP": 50.0,
+    "Cam_truoc_MP": 16.0,
+    "Khoi_luong": 193.0,
+    "Dung_luong_pin": 5200.0,
+    "Cong_suat_sac_W": 45.0,
+    "Hang": "Vivo",
+    "Chipset_dong": "Dimensity 6",
+    "Tam_nen": "AMOLED",
+    "Do_phan_giai": "FHD+"
+  },
+  "numeric_ranges": {
+    "RAM": {
+      "min": 1.0,
+      "p01": 2.0,
+      "median": 8.0,
+      "p99": 16.0,
+      "max": 24.0
+    },
+    "ROM": {
+      "min": 8.0,
+      "p01": 32.0,
+      "median": 128.0,
+      "p99": 512.0,
+      "max": 1024.0
+    },
+    "Ho_tro_5G": {
+      "min": 0.0,
+      "p01": 0.0,
+      "median": 1.0,
+      "p99": 1.0,
+      "max": 1.0
+    },
+    "Kich_thuoc_man": {
+      "min": 6.0,
+      "p01": 6.3,
+      "median": 6.7,
+      "p99": 7.9769999999999985,
+      "max": 8.12
+    },
+    "Tan_so_quet_Hz": {
+      "min": 90.0,
+      "p01": 90.0,
+      "median": 120.0,
+      "p99": 165.0,
+      "max": 185.0
+    },
+    "Cam_sau_MP": {
+      "min": 5.0,
+      "p01": 8.0,
+      "median": 50.0,
+      "p99": 200.0,
+      "max": 200.0
+    },
+    "Cam_truoc_MP": {
+      "min": 2.0,
+      "p01": 5.0,
+      "median": 16.0,
+      "p99": 50.0,
+      "max": 60.0
+    },
+    "Khoi_luong": {
+      "min": 150.0,
+      "p01": 162.0,
+      "median": 193.0,
+      "p99": 240.0,
+      "max": 309.0
+    },
+    "Dung_luong_pin": {
+      "min": 3000.0,
+      "p01": 3632.6,
+      "median": 5200.0,
+      "p99": 10000.0,
+      "max": 11000.0
+    },
+    "Cong_suat_sac_W": {
+      "min": 5.0,
+      "p01": 6.349999999999998,
+      "median": 45.0,
+      "p99": 120.0,
+      "max": 240.0
+    }
+  },
+  "price_range": {
+    "min": 1467900.0,
+    "max": 98700000.0
+  },
+  "metrics_test": {
+    "MAE": 2237556.1762116165,
+    "RMSE": 3772308.2052363916,
+    "R2": 0.8378977579369291,
+    "MAPE": 20.90872129369911
+  },
+  "cv_r2": {
+    "mean": 0.7544213742830422,
+    "std": 0.06939351579204141
+  },
+  "note": "Web nên ép kết quả predict() vào khoảng price_range và gửi số bằng pd.to_numeric."
+}
