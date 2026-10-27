@@ -11,10 +11,10 @@ import numpy as np
 import pandas as pd
 import sklearn
 
-SRC = Path(__file__).resolve().parent
+SRC = Path(__file__).resolve().parents[1] / "models"   # models/ nằm ở thư mục gốc dự án
 for name in ("phone_price_model.pkl", "model_meta.json"):
     if not (SRC / name).exists():
-        sys.exit(f"[LỖI] Chưa có {name}. Hãy chạy 'python src/train_model.py' trước.")
+        sys.exit(f"[LỖI] Chưa có {name}. Hãy chạy 'python src/train_model.py' trước (file nằm ở models/).")
 
 model = joblib.load(SRC / "phone_price_model.pkl")
 with open(SRC / "model_meta.json", encoding="utf-8") as f:

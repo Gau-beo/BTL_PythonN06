@@ -128,7 +128,7 @@ def main():
     )
     parser.add_argument(
         "--input",
-        default="data/clustered_phones.csv",
+        default="data/phones_kmeans.csv",
         help="Đường dẫn CSV kết quả phân cụm.",
     )
     parser.add_argument(

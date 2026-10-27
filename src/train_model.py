@@ -2,10 +2,10 @@
 
 Đầu vào : data/data_clean.csv (do process.py tạo ra).
           Cột Gia_ban = giá bán tại Bangladesh (BDT) x tỉ giá, đã quy đổi sang VNĐ.
-Đầu ra  : src/phone_price_model.pkl   (predict() trả về giá quy đổi, đơn vị VNĐ)
-          src/model_meta.json         (đặc trưng, lựa chọn dropdown, khoảng giá cho form web)
-          src/model_metrics.csv       (bảng so sánh 3 mô hình)
-          src/report_numbers.txt      (các số liệu để điền vào báo cáo)
+Đầu ra  : models/phone_price_model.pkl   (predict() trả về giá quy đổi, đơn vị VNĐ)
+          models/model_meta.json         (đặc trưng, lựa chọn dropdown, khoảng giá cho form web)
+          models/model_metrics.csv       (bảng so sánh 3 mô hình)
+          models/report_numbers.txt      (các số liệu để điền vào báo cáo)
           figures/*.png               (3 biểu đồ)
 
 Chạy:  python src/train_model.py
@@ -42,8 +42,9 @@ except Exception:
     TY_GIA_BDT_VND = 210
 
 CSV_PATH = ROOT / "data" / "data_clean.csv"
-MODEL_PATH = SRC / "phone_price_model.pkl"
-META_PATH = SRC / "model_meta.json"
+MODEL_DIR = ROOT / "models"
+MODEL_PATH = MODEL_DIR / "phone_price_model.pkl"
+META_PATH = MODEL_DIR / "model_meta.json"
 FIG_DIR = ROOT / "figures"
 
 TARGET = "Gia_ban"
@@ -203,6 +204,7 @@ def save_plots(y_te, pred_best, best, model_for_importance, test_res):
 # ----------------------------------------------------------------------------
 def main():
     FIG_DIR.mkdir(exist_ok=True)
+    MODEL_DIR.mkdir(exist_ok=True)
     df = load_data()
     features = NUM_COLS + CAT_COLS
     print(f"Đọc dữ liệu: {CSV_PATH} ({len(df)} máy)")
@@ -241,7 +243,7 @@ def main():
 
     # Bảng so sánh 3 mô hình + số liệu điền báo cáo
     bang = [{"Mo_hinh": n, "CV_R2": cv_res[n][0], "CV_R2_std": cv_res[n][1], **test_res[n]} for n in test_res]
-    pd.DataFrame(bang).round(3).to_csv(SRC / "model_metrics.csv", index=False, encoding="utf-8-sig")
+    pd.DataFrame(bang).round(3).to_csv(MODEL_DIR / "model_metrics.csv", index=False, encoding="utf-8-sig")
 
     thieu = (df[features].isna().mean() * 100).round(1)
     thieu = thieu[thieu > 0].sort_values(ascending=False)
@@ -257,7 +259,7 @@ def main():
         f"  Test: R2 = {r['R2']:.3f} | MAE = {r['MAE']:,.0f} | RMSE = {r['RMSE']:,.0f} | MAPE = {r['MAPE']:.1f}%",
         f"  RMSE / MAE = {r['RMSE'] / r['MAE']:.2f}",
     ]
-    (SRC / "report_numbers.txt").write_text("\n".join(dong) + "\n", encoding="utf-8")
+    (MODEL_DIR / "report_numbers.txt").write_text("\n".join(dong) + "\n", encoding="utf-8")
     print("\n" + "\n".join(dong) + "\n")
 
     # Huấn luyện lại trên TOÀN BỘ dữ liệu rồi mới xuất .pkl cho nhóm Web

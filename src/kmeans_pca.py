@@ -1,3 +1,9 @@
+"""K-means + PCA cho điện thoại.
+
+Chạy:  python src/kmeans_pca.py [--k 4]
+Chọn k bằng:  python src/evaluate_clusters.py  (xem figures/elbow.png, figures/silhouette.png)
+"""
+import argparse
 from pathlib import Path
 import re
 import joblib
@@ -39,6 +45,9 @@ def chuyen_so(cot):
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--k", type=int, default=4, help="Số cụm (mặc định 4, theo silhouette cao nhất)")
+    args = ap.parse_args()
     if not INPUT_FILE.exists():
         raise FileNotFoundError(
             f"Không tìm thấy dữ liệu: {INPUT_FILE}"
@@ -84,7 +93,7 @@ def main():
 
     
     kmeans = KMeans(
-        n_clusters=4,
+        n_clusters=args.k,
         random_state=42,
         n_init=10
     )

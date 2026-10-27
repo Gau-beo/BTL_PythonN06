@@ -6,7 +6,7 @@ Vẽ HISTOGRAM cho từng thuộc tính số của bộ dữ liệu điện tho�
 
 Cách chạy (từ thư mục gốc của repo):
     python src/ve_histogram.py
-    python src/ve_histogram.py --csv data_clean.csv --out figures
+    python src/ve_histogram.py --csv data/data_clean.csv --out figures
     python src/ve_histogram.py --moi-hang-mot-anh
 
 Kết quả:
@@ -16,6 +16,7 @@ Kết quả:
 """
 import argparse
 import os
+from pathlib import Path
 
 import matplotlib
 matplotlib.use("Agg")
@@ -40,6 +41,7 @@ THUOC_TINH = [
 ]
 
 INK, MUTED, GRID, BLUE, MED = "#1f2937", "#6b7280", "#e5e7eb", "#3b6fb6", "#c2410c"
+ROOT = Path(__file__).resolve().parents[1]
 sns.set_theme(style="whitegrid", rc={
     "font.family": "DejaVu Sans", "axes.edgecolor": "#9ca3af", "grid.color": GRID,
     "axes.labelcolor": INK, "text.color": INK, "xtick.color": MUTED, "ytick.color": MUTED})
@@ -93,8 +95,8 @@ def luu(fig, path):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--csv", default="data_clean.csv")
-    ap.add_argument("--out", default="figures")
+    ap.add_argument("--csv", default=str(ROOT / "data" / "data_clean.csv"))
+    ap.add_argument("--out", default=str(ROOT / "figures"))
     ap.add_argument("--moi-hang-mot-anh", action="store_true",
                     help="lưu thêm mỗi hãng một file ảnh riêng")
     args = ap.parse_args()

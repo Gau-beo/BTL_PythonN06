@@ -19,7 +19,7 @@ features = [
 ]
 
 X = df[features].apply(pd.to_numeric, errors='coerce')
-X = X.fillna(X.mean())
+X = X.fillna(X.median())   # cùng cách điền thiếu với kmeans_pca.py
 
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
@@ -33,6 +33,7 @@ for k in K_range:
     kmeans.fit(X_scaled)
     wcss.append(kmeans.inertia_)
     silhouette_scores.append(silhouette_score(X_scaled, kmeans.labels_))
+    print(f"k={k}: WCSS={kmeans.inertia_:.0f}  silhouette={silhouette_scores[-1]:.3f}")
 
 FIGURE_DIR = ROOT / "figures"
 FIGURE_DIR.mkdir(parents=True, exist_ok=True)

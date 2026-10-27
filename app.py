@@ -4,10 +4,8 @@ import pandas as pd
 import streamlit as st
 
 st.set_page_config(page_title='PhoneHub | Nhóm 06', page_icon='📱', layout='wide')
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 DATA_CANDIDATES = [
-    BASE_DIR/'data'/'dien_thoai_viet_nam_1021.csv',
-    BASE_DIR/'data'/'MockData'/'dien_thoai_viet_nam_1021.csv',
     BASE_DIR/'data'/'data_clean.csv'
 ]
 IMAGE_DIR = BASE_DIR/'assets'/'phones'
@@ -179,7 +177,7 @@ def product_card(row,key):
 
 source=next((p for p in DATA_CANDIDATES if p.exists()),None)
 if source is None:
-    st.error('Không tìm thấy dữ liệu. Kiểm tra thư mục data/ và đặt data_clean.csv hoặc dien_thoai_viet_nam_1021.csv vào đó.'); st.stop()
+    st.error('Không tìm thấy dữ liệu. Kiểm tra thư mục data/ có data_clean.csv (chạy python src/process.py để tạo).'); st.stop()
 try: df=load_data(str(source),source.stat().st_mtime)
 except Exception as e: st.error(f'Không đọc được dữ liệu: {e}'); st.stop()
 
@@ -324,7 +322,7 @@ elif page=='Phân tích thống kê':
 elif page=='K-means / PCA / Radar':
     header('06  /  ADVANCED ANALYTICS','K-means · PCA · Radar','Khám phá các nhóm điện thoại và so sánh đặc trưng cấu hình.')
     candidates=[c for c in ['Gia_ban','RAM','ROM','Kich_thuoc_man','Do_sang_nits','Cam_sau_MP','Cam_truoc_MP','Khoi_luong'] if c in filtered.columns]
-    features=st.multiselect('Thuộc tính phân cụm',candidates,default=[c for c in ['Gia_ban','RAM','ROM','Kich_thuoc_man'] if c in candidates]); k=st.slider('Số cụm K',2,6,3)
+    features=st.multiselect('Thuộc tính phân cụm',candidates,default=[c for c in ['Gia_ban','RAM','ROM','Kich_thuoc_man'] if c in candidates]); k=st.slider('Số cụm K',2,6,4)
     if len(features)<2: st.info('Chọn ít nhất hai thuộc tính số.')
     else:
         try:
@@ -370,45 +368,35 @@ elif page=='K-means / PCA / Radar':
         except ImportError: st.error('Cài thư viện cần thiết bằng: pip install scikit-learn matplotlib')
 
 elif page=='Ước lượng giá':
-    header('07  /  PRICE INTELLIGENCE','Ước lượng giá điện thoại','Thử nghiệm mức giá dựa trên cấu hình và dữ liệu hiện có.')
-    st.warning('Đây là mô hình thử nghiệm tự huấn luyện từ CSV hiện tại. Chất lượng dự đoán phụ thuộc mạnh vào độ sạch và số lượng dữ liệu.')
-    try:
-        from sklearn.compose import ColumnTransformer
-        from sklearn.pipeline import Pipeline
-        from sklearn.impute import SimpleImputer
-        from sklearn.preprocessing import OneHotEncoder,StandardScaler
-        from sklearn.ensemble import RandomForestRegressor
-        from sklearn.model_selection import train_test_split
-        from sklearn.metrics import mean_absolute_error
-        candidates=[c for c in ['Hang','He_dieu_hanh','Chipset','RAM','ROM','Ho_tro_5G','Kich_thuoc_man','Tam_nen','Do_phan_giai','Do_sang_nits','Cam_sau_MP','Cam_truoc_MP','Chat_lieu','Khang_nuoc_bui','Cong_ket_noi'] if c in df.columns]
-        train=df.dropna(subset=['Gia_ban']).copy(); candidates=[c for c in candidates if train[c].notna().sum()>2]
-        if len(train)<15 or not candidates: st.info('Chưa đủ dữ liệu hợp lệ để huấn luyện. Cần ít nhất 15 mẫu có giá và thông số.')
-        else:
-            cat = [
-                c for c in candidates
-                if (
-                    pd.api.types.is_object_dtype(train[c])
-                    or pd.api.types.is_string_dtype(train[c])
-                    or pd.api.types.is_bool_dtype(train[c])
-                    or isinstance(train[c].dtype, pd.CategoricalDtype)
-                )
-            ]
-
-            num = [c for c in candidates if c not in cat]
-            prep=ColumnTransformer([('num',Pipeline([('imputer',SimpleImputer(strategy='median')),('scale',StandardScaler())]),num),('cat',Pipeline([('imputer',SimpleImputer(strategy='most_frequent')),('onehot',OneHotEncoder(handle_unknown='ignore'))]),cat)])
-            model=Pipeline([('prep',prep),('regressor',RandomForestRegressor(n_estimators=160,random_state=42,min_samples_leaf=2))]); X=train[candidates]; y=train.Gia_ban
-            if len(train)>=20:
-                xt,xv,yt,yv=train_test_split(X,y,test_size=.2,random_state=42); model.fit(xt,yt); st.metric('MAE trên tập kiểm tra',money(mean_absolute_error(yv,model.predict(xv)))); model.fit(X,y)
-            else: model.fit(X,y); st.info('Ít dữ liệu nên kết quả chỉ để minh họa, chưa đủ để kết luận độ chính xác.')
+    header('07  /  PRICE INTELLIGENCE','Ước lượng giá điện thoại','Dùng mô hình đã huấn luyện bằng src/train_model.py (cùng mô hình trong báo cáo).')
+    MODEL_FILE=BASE_DIR/'models'/'phone_price_model.pkl'; META_FILE=BASE_DIR/'models'/'model_meta.json'
+    if not MODEL_FILE.exists() or not META_FILE.exists():
+        st.error('Chưa có models/phone_price_model.pkl hoặc models/model_meta.json. Chạy: python src/train_model.py')
+    else:
+        try:
+            import json, joblib
+            meta=json.loads(META_FILE.read_text(encoding='utf-8')); model=joblib.load(MODEL_FILE)
+            st.warning(meta.get('currency_note','Giá quy đổi từ thị trường Bangladesh, không phải giá bán tại Việt Nam.'))
+            mt=meta.get('metrics_test',{}); c1,c2,c3=st.columns(3)
+            with c1: metric('MÔ HÌNH',meta.get('model_name','?'),'đã huấn luyện')
+            with c2: metric('R² (TẬP KIỂM THỬ)',f"{mt.get('R2',0):.3f}",'càng gần 1 càng tốt')
+            with c3: metric('MAE',money(mt.get('MAE',0)),'sai số tuyệt đối TB')
             st.subheader('Nhập thông số điện thoại'); inputs={}; cols=st.columns(2)
-            for i,c in enumerate(candidates):
+            for i,c in enumerate(meta['features']):
+                label=meta['labels'].get(c,c)
                 with cols[i%2]:
-                    if c in cat:
-                        options=sorted(train[c].dropna().astype(str).unique().tolist()); inputs[c]=st.selectbox(c.replace('_',' '),options,key=f'pred_{c}')
+                    if c in meta['categorical_features']:
+                        options=meta['choices'][c]; d=meta['defaults'].get(c); idx=options.index(d) if d in options else 0
+                        inputs[c]=st.selectbox(label,options,index=idx,key=f'pred_{c}')
                     else:
-                        s=pd.to_numeric(train[c],errors='coerce').dropna(); default=float(s.median()) if not s.empty else 0.; mn=float(s.min()) if not s.empty else 0.; mx=float(s.max()) if not s.empty else max(default,1.); inputs[c]=st.number_input(c.replace('_',' '),min_value=mn,max_value=mx,value=min(max(default,mn),mx),key=f'pred_{c}')
-            if st.button('Ước lượng giá',type='primary',use_container_width=True): st.success(f'Giá ước lượng: {money(float(model.predict(pd.DataFrame([inputs]))[0]))}')
-    except ImportError: st.error('Thiếu scikit-learn. Cài bằng: pip install scikit-learn')
+                        r=meta['numeric_ranges'][c]; mn,mx=float(r['min']),float(r['max']); default=min(max(float(meta['defaults'][c]),mn),mx)
+                        inputs[c]=st.number_input(label,min_value=mn,max_value=mx,value=default,key=f'pred_{c}')
+            if st.button('Ước lượng giá',type='primary',use_container_width=True):
+                pred=float(model.predict(pd.DataFrame([inputs],columns=meta['features']))[0])
+                lo,hi=meta['price_range']['min'],meta['price_range']['max']; pred=min(max(pred,lo),hi)
+                st.success(f'Giá ước lượng: {money(pred)}'); st.caption(f"Sai số trung bình khoảng ±{mt.get('MAPE',0):.0f}% (MAPE trên tập kiểm thử).")
+        except ImportError: st.error('Thiếu thư viện. Cài bằng: pip install scikit-learn joblib')
+        except Exception as e: st.error(f'Không nạp/dùng được mô hình: {e}. Hãy chạy lại python src/train_model.py bằng đúng phiên bản scikit-learn trong requirements.txt.')
 
 st.divider()
 st.caption(f'PHONEHUB · NHÓM 06 | Nguồn dữ liệu: {source.relative_to(BASE_DIR)} | Giá bất thường (>200 triệu hoặc <=0) không được hiển thị như giá hợp lệ.')
