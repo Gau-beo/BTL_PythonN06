@@ -1,49 +1,61 @@
 ﻿Thuoc_tinh,Nhom,Thu_hang,Ten_may,Hang,Gia_tri
-Gia_ban,Cao_nhat,1,Samsung Galaxy Z Fold5,Samsung,62832860
-Gia_ban,Cao_nhat,2,Samsung Galaxy Z Fold6,Samsung,54455117
-Gia_ban,Cao_nhat,3,Honor Magic V2 RSR Porsche Design,Honor,52360891
-Gia_ban,Thap_nhat,1,Realme C2s,Realme,837774
-Gia_ban,Thap_nhat,2,Itel A25,Itel,1045123
-Gia_ban,Thap_nhat,3,Itel A33,Itel,1128901
+Gia_ban,Cao_nhat,1,Samsung Galaxy Z TriFold,Samsung,98700000
+Gia_ban,Cao_nhat,2,Apple iPhone Duo,Apple,90300000
+Gia_ban,Cao_nhat,3,Apple iPhone 18 Pro Max,Apple,62999790
+Gia_ban,Thap_nhat,1,Itel A50,Itel,1467900
+Gia_ban,Thap_nhat,2,Itel A50C,Itel,1467900
+Gia_ban,Thap_nhat,3,Itel A05s,Itel,1572900
 RAM,Cao_nhat,1,Honor Magic6 RSR Porsche Design,Honor,24
-RAM,Cao_nhat,2,Honor Magic7 RSR Porsche Design,Honor,24
-RAM,Cao_nhat,3,Realme GT5 240W,Realme,24
-RAM,Thap_nhat,1,Itel A25,Itel,1
-RAM,Thap_nhat,2,Itel A33,Itel,1
-RAM,Thap_nhat,3,Itel Alpha,Itel,1
+RAM,Cao_nhat,2,Realme GT5 240W,Realme,24
+RAM,Cao_nhat,3,Honor Magic V2,Honor,16
+RAM,Thap_nhat,1,TCL 403,TCL,1
+RAM,Thap_nhat,2,Honor X5,Honor,2
+RAM,Thap_nhat,3,Infinix Smart 10 HD,Infinix,2
 ROM,Cao_nhat,1,Honor Magic V2 RSR Porsche Design,Honor,1024
 ROM,Cao_nhat,2,Honor Magic6 RSR Porsche Design,Honor,1024
-ROM,Cao_nhat,3,Honor Magic7 RSR Porsche Design,Honor,1024
-ROM,Thap_nhat,1,Itel A33,Itel,8
-ROM,Thap_nhat,2,Nokia 2,Nokia,8
-ROM,Thap_nhat,3,Nokia 2.1,Nokia,8
-Kich_thuoc_man,Cao_nhat,1,Xiaomi Pad 6S Pro 12.4,Xiaomi,12.4
-Kich_thuoc_man,Cao_nhat,2,Xiaomi Pad 6,Xiaomi,11
-Kich_thuoc_man,Cao_nhat,3,Samsung Galaxy Tab S5e,Samsung,10.5
-Kich_thuoc_man,Thap_nhat,1,Apple iPhone SE,Apple,4
-Kich_thuoc_man,Thap_nhat,2,Samsung Galaxy J1 Mini Prime,Samsung,4
-Kich_thuoc_man,Thap_nhat,3,Samsung Z2,Samsung,4
-Do_sang_nits,Cao_nhat,1,Vivo iQOO 15 Ultra,Vivo,8000
-Do_sang_nits,Cao_nhat,2,Honor 600e,Honor,6500
-Do_sang_nits,Cao_nhat,3,Honor Play11 Plus,Honor,6500
-Do_sang_nits,Thap_nhat,1,Xiaomi Redmi 9i,Xiaomi,270
-Do_sang_nits,Thap_nhat,2,Motorola Moto E7 Power,Motorola,380
-Do_sang_nits,Thap_nhat,3,Motorola Moto E7i Power,Motorola,380
+ROM,Cao_nhat,3,Realme GT5 240W,Realme,1024
+ROM,Thap_nhat,1,Vivo V80 Lite,Vivo,8
+ROM,Thap_nhat,2,Honor Play20C,Honor,32
+ROM,Thap_nhat,3,Honor X5,Honor,32
+Kich_thuoc_man,Cao_nhat,1,Oppo Find N5,Oppo,8.12
+Kich_thuoc_man,Cao_nhat,2,Oppo Find N6,Oppo,8.12
+Kich_thuoc_man,Cao_nhat,3,Motorola Razr Fold,Motorola,8.1
+Kich_thuoc_man,Thap_nhat,1,TCL 403,TCL,6
+Kich_thuoc_man,Thap_nhat,2,TCL 502,TCL,6
+Kich_thuoc_man,Thap_nhat,3,Apple iPhone 15,Apple,6.1
+Dung_luong_pin,Cao_nhat,1,Honor Magic9 Super,Honor,11000
+Dung_luong_pin,Cao_nhat,2,Honor X80 Pro Max,Honor,11000
+Dung_luong_pin,Cao_nhat,3,Honor X9e Pro,Honor,11000
+Dung_luong_pin,Thap_nhat,1,Nokia C110,Nokia,3000
+Dung_luong_pin,Thap_nhat,2,Nokia C12,Nokia,3000
+Dung_luong_pin,Thap_nhat,3,Nokia C210,Nokia,3000
+Cong_suat_sac_W,Cao_nhat,1,Realme GT Neo 5 240W,Realme,240
+Cong_suat_sac_W,Cao_nhat,2,Realme GT3,Realme,240
+Cong_suat_sac_W,Cao_nhat,3,Realme GT5 240W,Realme,240
+Cong_suat_sac_W,Thap_nhat,1,Apple iPhone 16e,Apple,5
+Cong_suat_sac_W,Thap_nhat,2,Honor 70 Lite,Honor,5
+Cong_suat_sac_W,Thap_nhat,3,Honor Play7T,Honor,5
+Tan_so_quet_Hz,Cao_nhat,1,Honor Win,Honor,185
+Tan_so_quet_Hz,Cao_nhat,2,Honor Win RT,Honor,185
+Tan_so_quet_Hz,Cao_nhat,3,Honor Win Turbo2,Honor,185
+Tan_so_quet_Hz,Thap_nhat,1,Honor 500 Smart,Honor,90
+Tan_so_quet_Hz,Thap_nhat,2,Honor 90 Lite,Honor,90
+Tan_so_quet_Hz,Thap_nhat,3,Honor 90 Smart,Honor,90
 Cam_sau_MP,Cao_nhat,1,Honor 400,Honor,200
-Cam_sau_MP,Cao_nhat,2,Honor 90,Honor,200
-Cam_sau_MP,Cao_nhat,3,Oppo Find N6,Oppo,200
-Cam_sau_MP,Thap_nhat,1,Itel A25,Itel,5
-Cam_sau_MP,Thap_nhat,2,Itel A33,Itel,5
-Cam_sau_MP,Thap_nhat,3,Nokia C01 Plus,Nokia,5
-Cam_truoc_MP,Cao_nhat,1,Motorola Edge 30 Pro,Motorola,60
+Cam_sau_MP,Cao_nhat,2,Honor 400 (China),Honor,200
+Cam_sau_MP,Cao_nhat,3,Honor 400 Pro,Honor,200
+Cam_sau_MP,Thap_nhat,1,TCL 502,TCL,5
+Cam_sau_MP,Thap_nhat,2,TCL K70 SE,TCL,5
+Cam_sau_MP,Thap_nhat,3,Honor X5,Honor,8
+Cam_truoc_MP,Cao_nhat,1,Motorola Edge 40 Pro,Motorola,60
 Cam_truoc_MP,Cao_nhat,2,Motorola Edge+ (2023),Motorola,60
-Cam_truoc_MP,Cao_nhat,3,Motorola Moto X40,Motorola,60
-Cam_truoc_MP,Thap_nhat,1,Samsung Galaxy J1 Mini Prime,Samsung,0.3
-Cam_truoc_MP,Thap_nhat,2,Samsung Z2,Samsung,0.3
-Cam_truoc_MP,Thap_nhat,3,Apple iPhone SE,Apple,1.2
-Khoi_luong,Cao_nhat,1,Xiaomi Pad 6S Pro 12.4,Xiaomi,590
-Khoi_luong,Cao_nhat,2,Xiaomi Pad 6,Xiaomi,490
-Khoi_luong,Cao_nhat,3,Samsung Galaxy Tab S5e,Samsung,400
-Khoi_luong,Thap_nhat,1,Apple iPhone SE,Apple,113
-Khoi_luong,Thap_nhat,2,Itel A33,Itel,123
-Khoi_luong,Thap_nhat,3,Samsung Galaxy J1 Mini Prime,Samsung,126
+Cam_truoc_MP,Cao_nhat,3,Honor Magic9,Honor,55
+Cam_truoc_MP,Thap_nhat,1,TCL 502,TCL,2
+Cam_truoc_MP,Thap_nhat,2,TCL K70 SE,TCL,2
+Cam_truoc_MP,Thap_nhat,3,Honor 200 Smart,Honor,5
+Khoi_luong,Cao_nhat,1,Samsung Galaxy Z TriFold,Samsung,309
+Khoi_luong,Cao_nhat,2,Tecno Phantom V Fold,Tecno,299
+Khoi_luong,Cao_nhat,3,Vivo X Fold2,Vivo,279
+Khoi_luong,Thap_nhat,1,TCL K70 SE,TCL,150
+Khoi_luong,Thap_nhat,2,Honor Magic8 Pro Air,Honor,155
+Khoi_luong,Thap_nhat,3,Infinix Hot 60 Pro+,Infinix,155
