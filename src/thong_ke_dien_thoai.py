@@ -55,6 +55,26 @@ def tinh_thong_ke(du_lieu: pd.DataFrame) -> pd.DataFrame:
     return bang_thong_ke
 
 
+def tim_hang_dan_dau(bang_thong_ke: pd.DataFrame) -> pd.DataFrame:
+    # So sánh từng cột Mean/Median giữa các hãng, bỏ dòng tổng hợp all.
+    cac_hang = bang_thong_ke[bang_thong_ke["Hang"] != "all"].sort_values("Hang")
+    ket_qua = []
+    for thuoc_tinh in THUOC_TINH:
+        for chi_tieu in ["Mean", "Median"]:
+            ten_cot = f"{chi_tieu}_{thuoc_tinh}"
+            gia_tri_lon_nhat = cac_hang[ten_cot].max()
+            # So sánh trước khi làm tròn; lấy đủ mọi hãng đồng hạng.
+            cac_hang_dan_dau = cac_hang[cac_hang[ten_cot] == gia_tri_lon_nhat]
+            for ten_hang in cac_hang_dan_dau["Hang"]:
+                ket_qua.append({
+                    "Thuoc_tinh": thuoc_tinh,
+                    "Chi_tieu": chi_tieu,
+                    "Hang": ten_hang,
+                    "Gia_tri": gia_tri_lon_nhat,
+                })
+    return pd.DataFrame(ket_qua, columns=["Thuoc_tinh", "Chi_tieu", "Hang", "Gia_tri"])
+
+
 def tim_top_bottom(du_lieu: pd.DataFrame) -> pd.DataFrame:
 
     ket_qua = []
@@ -94,7 +114,7 @@ def tim_top_bottom(du_lieu: pd.DataFrame) -> pd.DataFrame:
 if __name__ == "__main__":
     # 1. Lấy đường dẫn file đầu vào và thư mục đầu ra từ lệnh chạy.
     parser = argparse.ArgumentParser(
-        description="Tim Top/Bottom 3 va tinh Median, Mean, Std theo hang dien thoai."
+        description="Tinh thong ke, tim hang dan dau Mean/Median va Top/Bottom 3."
     )
     parser.add_argument(
         "input_csv", type=Path, nargs="?", default=FILE_DU_LIEU,
@@ -102,13 +122,14 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "-o", "--output-dir", type=Path, default=THU_MUC_KET_QUA,
-        help="Thu muc luu results2.csv va top_bottom3.csv.",
+        help="Thu muc luu results2.csv, top_bottom3.csv va hang_dan_dau.csv.",
     )
     tham_so = parser.parse_args()
 
-    # 2. Đọc dữ liệu và tính hai bảng kết quả.
+    # 2. Đọc dữ liệu, tính thống kê và tìm hãng dẫn đầu từng thuộc tính.
     du_lieu = doc_du_lieu(tham_so.input_csv)
     bang_thong_ke = tinh_thong_ke(du_lieu)
+    bang_hang_dan_dau = tim_hang_dan_dau(bang_thong_ke)
     bang_top_bottom = tim_top_bottom(du_lieu)
 
     # 3. Lưu mỗi bảng vào một file CSV.
@@ -117,6 +138,7 @@ if __name__ == "__main__":
     cac_file_ket_qua = [
         ("results2.csv", bang_thong_ke),
         ("top_bottom3.csv", bang_top_bottom),
+        ("hang_dan_dau.csv", bang_hang_dan_dau),
     ]
 
     for ten_file, bang_ket_qua in cac_file_ket_qua:
