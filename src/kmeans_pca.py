@@ -1,8 +1,3 @@
-"""K-means + PCA cho điện thoại.
-
-Chạy:  python src/kmeans_pca.py [--k 4]
-Chọn k bằng:  python src/evaluate_clusters.py  (xem figures/elbow.png, figures/silhouette.png)
-"""
 import argparse
 from pathlib import Path
 import re
@@ -37,7 +32,6 @@ FEATURES = [
 
 
 def chuyen_so(cot):
-    """Chuyển dữ liệu có đơn vị về dạng số."""
     cot = cot.astype("string").str.strip()
     cot = cot.str.replace(",", "", regex=False)
     cot = cot.str.extract(r"(-?\d+(?:\.\d+)?)", expand=False)

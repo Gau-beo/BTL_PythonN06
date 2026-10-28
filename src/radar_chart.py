@@ -37,11 +37,6 @@ def plot_cluster_radar(
     cluster_col: str = "Cluster",
     output_path: str = "figures/radar_chart.png",
 ) -> Path:
-    """Vẽ Radar so sánh giá trị trung bình các thông số giữa những cụm có sẵn.
-
-    Hàm này KHÔNG tự chạy K-means. DataFrame cần có cột nhãn cụm do bước
-    phân cụm tạo ra, cùng các cột số trong FEATURES.
-    """
     if cluster_col not in df.columns:
         raise ValueError(
             f"Không tìm thấy cột nhãn cụm '{cluster_col}'. "
@@ -64,19 +59,15 @@ def plot_cluster_radar(
     if data.empty:
         raise ValueError("Không có dữ liệu hợp lệ để vẽ Radar.")
 
-    # Điền giá trị thiếu bằng trung vị của từng thông số.
     data[features] = data[features].fillna(data[features].median())
     data = data.dropna(subset=features, how="all")
 
-    # Trung bình từng thông số theo cụm.
     cluster_means = data.groupby(cluster_col, dropna=True)[features].mean()
     if len(cluster_means) < 2:
         raise ValueError(
             "Cần ít nhất 2 cụm trong dữ liệu để so sánh bằng biểu đồ Radar."
         )
 
-    # Đưa trung bình các thông số về cùng thang 0–1 để tránh đơn vị khác nhau
-    # (ví dụ giá bán và RAM) làm biểu đồ khó đọc.
     scaler = MinMaxScaler()
     scaled_means = pd.DataFrame(
         scaler.fit_transform(cluster_means),

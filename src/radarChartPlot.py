@@ -1,9 +1,3 @@
-"""Vẽ biểu đồ radar so sánh hai điện thoại.
-
-Cách chạy (từ thư mục gốc dự án):
-    python src/radarChartPlot.py --p1 "Samsung Galaxy A36" --p2 "Oppo Reno13" \
-        --Attribute Gia_ban,RAM,ROM,Cam_sau_MP,Dung_luong_pin
-"""
 import argparse
 from pathlib import Path
 
@@ -18,7 +12,6 @@ DEFAULT_CSV = ROOT / "data" / "data_clean.csv"
 
 
 def tim_may(df, ten):
-    """Tìm máy theo tên: khớp đúng (không phân biệt hoa/thường), nếu không thì khớp một phần."""
     ten_cot = df["Ten_may"].str.lower().str.strip()
     khop = df[ten_cot == ten.lower().strip()]
     if khop.empty:
@@ -26,7 +19,7 @@ def tim_may(df, ten):
     if khop.empty:
         raise SystemExit(f"Không tìm thấy máy '{ten}' trong dữ liệu.")
     if len(khop) > 1:
-        print(f"[Lưu ý] '{ten}' khớp {len(khop)} máy, dùng máy đầu tiên: {khop.iloc[0]['Ten_may']}")
+        raise SystemExit(f"Tên '{ten}' khớp nhiều máy. Hãy nhập tên đầy đủ: {khop['Ten_may'].tolist()}")
     return khop.iloc[0]
 
 
@@ -50,7 +43,10 @@ def main():
         df[c] = pd.to_numeric(df[c], errors="coerce")
 
     m1, m2 = tim_may(df, a.p1), tim_may(df, a.p2)
-    # Đưa về thang 0-1 theo min-max của toàn bộ dữ liệu để các đơn vị khác nhau so sánh được.
+    for m in (m1, m2):
+        missing = [c for c in attrs if pd.isna(m[c])]
+        if missing:
+            raise SystemExit(f"Máy {m['Ten_may']} thiếu thuộc tính: {missing}. Hãy chọn thuộc tính khác.")
     lo, hi = df[attrs].min(), df[attrs].max()
     def chuan_hoa(m):
         return ((m[attrs].astype(float) - lo) / (hi - lo)).fillna(0).tolist()

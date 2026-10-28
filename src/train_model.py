@@ -1,15 +1,3 @@
-"""Ước lượng giá điện thoại (Nhóm 06) - [GĐ2] Huấn luyện mô hình ước lượng giá.
-
-Đầu vào : data/data_clean.csv (do process.py tạo ra).
-          Cột Gia_ban = giá bán tại Bangladesh (BDT) x tỉ giá, đã quy đổi sang VNĐ.
-Đầu ra  : models/phone_price_model.pkl   (predict() trả về giá quy đổi, đơn vị VNĐ)
-          models/model_meta.json         (đặc trưng, lựa chọn dropdown, khoảng giá cho form web)
-          models/model_metrics.csv       (bảng so sánh 3 mô hình)
-          models/report_numbers.txt      (các số liệu để điền vào báo cáo)
-          figures/*.png               (3 biểu đồ)
-
-Chạy:  python src/train_model.py
-"""
 import json
 import re
 import sys
@@ -17,7 +5,7 @@ from pathlib import Path
 
 import matplotlib
 
-matplotlib.use("Agg")  # không cần giao diện
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import joblib
 import numpy as np
@@ -31,13 +19,14 @@ from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.model_selection import KFold, cross_val_score, train_test_split
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import FunctionTransformer, OneHotEncoder, StandardScaler
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from model_utils import QuantileClipper
 
 SRC = Path(__file__).resolve().parent
 ROOT = SRC.parent
 sys.path.insert(0, str(SRC))
 try:
-    from process import TY_GIA_BDT_VND   # lấy tỉ giá từ process.py để hai file luôn khớp nhau
+    from process import TY_GIA_BDT_VND
 except Exception:
     TY_GIA_BDT_VND = 210
 
@@ -48,11 +37,9 @@ META_PATH = MODEL_DIR / "model_meta.json"
 FIG_DIR = ROOT / "figures"
 
 TARGET = "Gia_ban"
-MIN_CAT_COUNT = 5          # giá trị chữ xuất hiện < 5 lần gộp vào nhóm "hiếm"
-CLIP_Q = (0.01, 0.99)      # cắt giá trị số về phân vị 1%-99% (chặn số liệu cực đoan nhập từ web)
+MIN_CAT_COUNT = 5
+CLIP_Q = (0.01, 0.99)
 
-# Chỉ dùng đặc trưng cấu hình mà người dùng web nhập được vào form.
-# (Nam_ra_mat có sẵn trong dữ liệu; thêm vào NUM_COLS nếu muốn dùng, độ chính xác tăng rất ít.)
 NUM_COLS = [
     "RAM", "ROM", "Ho_tro_5G", "Kich_thuoc_man", "Tan_so_quet_Hz",
     "Cam_sau_MP", "Cam_truoc_MP", "Khoi_luong", "Dung_luong_pin", "Cong_suat_sac_W",
@@ -70,11 +57,7 @@ LABELS = {
 }
 
 
-# ----------------------------------------------------------------------------
-# DỮ LIỆU
-# ----------------------------------------------------------------------------
 def group_chipset(s):
-    """Gom tên chipset về dòng chip (vd 'Qualcomm SM8750-AB Snapdragon 8 Elite (3 nm)' -> 'Snapdragon 8')."""
     t = str(s).lower()
     if "snapdragon" in t:
         m = re.search(r"snapdragon\s*(\d)", t)
@@ -96,7 +79,6 @@ def group_chipset(s):
 
 
 def group_do_phan_giai(s):
-    """Gom '1080 x 2400' về HD+ / FHD+ / 2K+ theo số điểm ảnh của cạnh ngắn."""
     m = re.search(r"(\d{3,4})\s*x\s*(\d{3,4})", str(s))
     if not m:
         return "Khac"
@@ -111,7 +93,6 @@ def load_data():
 
     df["Chipset_dong"] = df["Chipset"].apply(group_chipset)
     df["Do_phan_giai"] = df["Do_phan_giai"].apply(group_do_phan_giai)
-    # Cột chữ để kiểu object với np.nan cho ô thiếu (SimpleImputer không xử lý được pd.NA)
     for c in CAT_COLS:
         df[c] = df[c].astype(object).where(df[c].notna(), np.nan)
 
@@ -121,20 +102,14 @@ def load_data():
     return df
 
 
-# ----------------------------------------------------------------------------
-# MÔ HÌNH
-# ----------------------------------------------------------------------------
-def make_model(estimator, lo, hi):
-    """Pipeline + log-giá. Nhờ TransformedTargetRegressor, predict() trả về giá thật (không phải log)."""
+def make_model(estimator):
     num = Pipeline([
-        ("clip", FunctionTransformer(np.clip, kw_args={"a_min": lo, "a_max": hi},
-                                     feature_names_out="one-to-one")),
+        ("clip", QuantileClipper()),
         ("imp", SimpleImputer(strategy="median")),
         ("sc", StandardScaler()),
     ])
     cat = Pipeline([
         ("imp", SimpleImputer(strategy="constant", fill_value="Khac")),
-        # giá trị hiếm và giá trị chưa từng thấy đều rơi vào nhóm "hiếm"
         ("oh", OneHotEncoder(handle_unknown="infrequent_if_exist", min_frequency=MIN_CAT_COUNT)),
     ])
     prep = ColumnTransformer([("num", num, NUM_COLS), ("cat", cat, CAT_COLS)])
@@ -199,9 +174,6 @@ def save_plots(y_te, pred_best, best, model_for_importance, test_res):
     plt.close()
 
 
-# ----------------------------------------------------------------------------
-# MAIN
-# ----------------------------------------------------------------------------
 def main():
     FIG_DIR.mkdir(exist_ok=True)
     MODEL_DIR.mkdir(exist_ok=True)
@@ -221,9 +193,8 @@ def main():
         "Random Forest": RandomForestRegressor(n_estimators=300, random_state=42, n_jobs=-1),
         "Gradient Boosting": GradientBoostingRegressor(random_state=42),
     }
-    models = {n: make_model(e, lo, hi) for n, e in estimators.items()}
+    models = {n: make_model(e) for n, e in estimators.items()}
 
-    # Chọn mô hình bằng cross-validation trên tập train (ổn định hơn 1 lần chia test)
     kf = KFold(5, shuffle=True, random_state=42)
     cv_res, test_res, test_pred = {}, {}, {}
     print("\n--- HUẤN LUYỆN VÀ ĐÁNH GIÁ ---")
@@ -241,7 +212,6 @@ def main():
     r = test_res[best]
     print(f"\n=> Mô hình được chọn (CV R2 cao nhất): {best}")
 
-    # Bảng so sánh 3 mô hình + số liệu điền báo cáo
     bang = [{"Mo_hinh": n, "CV_R2": cv_res[n][0], "CV_R2_std": cv_res[n][1], **test_res[n]} for n in test_res]
     pd.DataFrame(bang).round(3).to_csv(MODEL_DIR / "model_metrics.csv", index=False, encoding="utf-8-sig")
 
@@ -262,7 +232,6 @@ def main():
     (MODEL_DIR / "report_numbers.txt").write_text("\n".join(dong) + "\n", encoding="utf-8")
     print("\n" + "\n".join(dong) + "\n")
 
-    # Huấn luyện lại trên TOÀN BỘ dữ liệu rồi mới xuất .pkl cho nhóm Web
     joblib.dump(clone(models[best]).fit(X, y), MODEL_PATH)
 
     vc = {c: df[c].dropna().astype(str).value_counts() for c in CAT_COLS}

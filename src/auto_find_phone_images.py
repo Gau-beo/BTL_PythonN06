@@ -33,7 +33,6 @@ session.headers.update({
 })
 
 def search_commons(name, brand):
-    # Thu ten model va ten hang, khong yeu cau tieu de khop tuyet doi
     queries = [f'"{brand} {name}"', f"{brand} {name} smartphone"]
 
     for query in queries:

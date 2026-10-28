@@ -1,4 +1,6 @@
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent / 'src'))
 import re, unicodedata
 import pandas as pd
 import streamlit as st
@@ -18,7 +20,6 @@ st.markdown("""
 html,body,[class*="css"]{font-family:'Be Vietnam Pro',sans-serif;color:var(--ink)}
 .stApp{background:var(--bg)}
 .block-container{max-width:1500px;padding-top:1.25rem;padding-bottom:3rem}
-/* sidebar */
 section[data-testid="stSidebar"]{background:#101B31;border-right:1px solid #23314A}
 section[data-testid="stSidebar"] *{color:#F4F7FC}
 section[data-testid="stSidebar"] [data-testid="stCaptionContainer"]{color:#AEBBD0}
@@ -28,14 +29,12 @@ section[data-testid="stSidebar"] [role="radiogroup"] label:hover{background:#1C2
 section[data-testid="stSidebar"] [data-testid="stWidgetLabel"] p{color:#D7E0EF;font-size:12px;font-weight:700}
 section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] h2{font-size:25px;letter-spacing:-.8px}
 section[data-testid="stSidebar"] hr{border-color:#293750}
-/* masthead */
 .store-topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:7px 2px 19px;margin-bottom:4px}
 .store-brand{display:flex;align-items:center;gap:11px}
 .store-logo{width:43px;height:43px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#245BDB,#16B8A6);color:white;font-size:24px;box-shadow:0 8px 18px #245bdb2b}
 .store-name{font-weight:800;font-size:22px;letter-spacing:-.8px;color:#111C32;line-height:1.1}
 .store-sub{font-size:9px;font-weight:800;letter-spacing:1.6px;color:#7A879B;margin-top:5px}
 .store-pill{padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:white;color:#5B6880;font-size:11px;font-weight:700;white-space:nowrap}
-/* hero */
 .hero{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(200px,.75fr);gap:20px;align-items:center;padding:clamp(26px,4vw,48px);border-radius:28px;color:white;background:radial-gradient(circle at 83% 15%,#477EFF 0%,transparent 30%),linear-gradient(120deg,#101B31 0%,#173B83 58%,#245BDB 100%);margin-bottom:25px;box-shadow:0 20px 45px rgba(21,48,105,.16)}
 .hero:before{content:'';position:absolute;width:330px;height:330px;border:1px solid #ffffff18;border-radius:50%;right:-100px;top:-145px;box-shadow:0 0 0 35px #ffffff08,0 0 0 70px #ffffff05;pointer-events:none}
 .hero-copy,.hero-visual{position:relative;z-index:1}
@@ -50,17 +49,14 @@ section[data-testid="stSidebar"] hr{border-color:#293750}
 .phone-art:after{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:43px;height:10px;border-radius:999px;background:#111C32}
 .phone-orbit{position:absolute;width:188px;height:188px;border:1px solid #ffffff45;border-radius:50%;transform:rotate(-18deg)}
 .hero-tag{position:absolute;right:2%;bottom:18%;background:#fff;color:#15213A;border:1px solid #ffffff80;padding:11px 14px;border-radius:14px;box-shadow:0 12px 25px #07152f40;font-size:11px;font-weight:800;transform:rotate(-4deg)}
-/* headings */
 .eyebrow{color:var(--blue);font-size:10px;font-weight:800;letter-spacing:1.7px;margin-bottom:8px}
 .section-title{font-size:clamp(21px,2vw,28px);font-weight:800;letter-spacing:-.8px;margin-bottom:5px;color:var(--ink)}
 .section-caption{color:var(--muted);font-size:13px;line-height:1.75;margin-bottom:18px}
-/* metrics */
 .metric-card{position:relative;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 21px;min-height:123px;box-shadow:0 7px 22px rgba(17,28,50,.035)}
 .metric-card:after{content:'';position:absolute;width:64px;height:64px;border-radius:50%;right:-26px;top:-27px;background:var(--blue-soft)}
 .metric-label{color:#7B879A;font-size:10px;font-weight:800;letter-spacing:.9px;margin-bottom:12px;position:relative;z-index:1}
 .metric-value{color:var(--ink);font-size:clamp(22px,2vw,30px);font-weight:800;letter-spacing:-.8px;overflow-wrap:anywhere;position:relative;z-index:1}
 .metric-foot{color:var(--blue);font-size:11px;font-weight:600;margin-top:8px;position:relative;z-index:1}
-/* product cards */
 div[data-testid="stVerticalBlockBorderWrapper"]{background:#fff;border-color:var(--line);border-radius:20px;box-shadow:0 5px 20px rgba(17,28,50,.035);transition:transform .2s ease,box-shadow .2s ease}
 div[data-testid="stVerticalBlockBorderWrapper"]:hover{box-shadow:0 15px 34px rgba(17,28,50,.10);transform:translateY(-2px)}
 div[data-testid="stVerticalBlockBorderWrapper"] [data-testid="stImage"]{background:#F5F7FB;border-radius:15px;padding:7px}
@@ -72,7 +68,6 @@ div[data-testid="stImage"] img{border-radius:13px;object-fit:contain}
 .page-indicator strong{color:#245BDB;font-size:18px;margin:0 7px;letter-spacing:0}
 .page-indicator span{margin:0 5px;color:#A0AABC}
 .product-spec{font-size:11px;color:#6D7B91;line-height:1.8;min-height:24px;padding:8px 0;border-top:1px solid #EDF0F6}
-/* forms */
 .stApp input,.stApp textarea,.stApp [data-baseweb="select"]>div{background:#fff!important;color:var(--ink)!important;border-color:#DCE3EE!important;border-radius:11px!important}
 .stApp input::placeholder,.stApp textarea::placeholder{color:#8A96A8!important}
 .stApp label,.stApp [data-testid="stWidgetLabel"] p{color:var(--ink);font-weight:600}
@@ -100,7 +95,6 @@ def parse_numeric(series):
         s=str(v).strip().lower().replace('vnd','').replace('vnđ','').replace('đ','').replace('gb','').replace('mp','')
         s=re.sub(r'\s+','',s)
         if not s: return float('nan')
-        # Vietnamese CSV often uses dots/commas as thousands separators.
         if re.fullmatch(r'\d{1,3}([.,]\d{3})+',s): s=re.sub(r'[.,]','',s)
         elif ',' in s and '.' not in s: s=s.replace(',','.')
         try: return float(s)
@@ -122,7 +116,6 @@ def load_data(path, mtime):
     d['Ten_may']=d['Ten_may'].fillna('Chưa rõ tên').astype(str); d['Hang']=d['Hang'].fillna('Chưa phân loại').astype(str)
     d['Gia_ban_goc']=d['Gia_ban'] if 'Gia_ban' in d else pd.NA
     if 'Gia_ban' not in d: d['Gia_ban']=pd.NA
-    # Flag implausible prices instead of presenting them as real prices.
     d.loc[(d['Gia_ban']<=0)|(d['Gia_ban']>200_000_000),'Gia_ban']=pd.NA
     return d.drop_duplicates().reset_index(drop=True)
 
@@ -134,7 +127,6 @@ def metric(label,value,foot=''):
     st.markdown(f'<div class="metric-card"><div class="metric-label">{label}</div><div class="metric-value">{value}</div><div class="metric-foot">{foot}</div></div>',unsafe_allow_html=True)
 
 def image_for(row):
-    # Priority: URL/path in CSV, then local file named after the phone model.
     for c in ['Anh','URL_anh','Link_anh','Image_URL','image_url','Image','image','Photo','photo']:
         v=row.get(c) if c in row.index else None
         if isinstance(v,str) and v.strip().startswith(('https://','http://')): return v.strip()
@@ -221,11 +213,9 @@ if page=='Khám phá điện thoại':
         total = max(1, (len(catalog) + per_page - 1) // per_page)
         if 'catalog_page' not in st.session_state:
             st.session_state['catalog_page'] = 1
-        # Keep the current page valid when search/filter results shrink.
         st.session_state['catalog_page'] = min(max(1, st.session_state['catalog_page']), total)
         current = st.session_state['catalog_page']
 
-        # Pagination bar with previous/next arrows and a centered page indicator.
         prev_col, page_col, next_col = st.columns([1, 2, 1], vertical_alignment='center')
         with prev_col:
             if st.button('← Trang trước', key='catalog_prev', disabled=current <= 1, use_container_width=True):
@@ -262,7 +252,7 @@ elif page=='Chi tiết điện thoại':
             st.subheader(name); st.markdown(f'### :green[{money(row.get("Gia_ban"))}]'); st.write(f'**Hãng:** {row.get("Hang")}')
         with right:
             st.subheader('Thông số kỹ thuật'); detail=row.drop(labels=['Gia_ban_goc'],errors='ignore').dropna()
-            st.dataframe(detail.rename_axis('Thuộc tính').reset_index(name='Giá trị'),use_container_width=True,hide_index=True)
+            st.dataframe(detail.rename_axis('Thuộc tính').reset_index(name='Giá trị').astype(str),use_container_width=True,hide_index=True)
 
 elif page=='So sánh hai máy':
     header('03  /  SIDE-BY-SIDE','Đặt hai lựa chọn lên bàn cân','So sánh giá và thông số kỹ thuật trong cùng một bảng.')
@@ -285,7 +275,7 @@ elif page=='So sánh hai máy':
         rows=[{'Thông số':'Giá bán',na:money(ra.get('Gia_ban')),nb:money(rb.get('Gia_ban'))}]
         for f in fields:
             if f in df.columns: rows.append({'Thông số':f,na:ra.get(f,'—'),nb:rb.get(f,'—')})
-        st.dataframe(pd.DataFrame(rows),use_container_width=True,hide_index=True)
+        st.dataframe(pd.DataFrame(rows).astype(str),use_container_width=True,hide_index=True)
     else: st.info('Cần ít nhất hai mẫu điện thoại trong dữ liệu.')
 
 elif page=='Tổng quan':
@@ -322,7 +312,7 @@ elif page=='Phân tích thống kê':
 elif page=='K-means / PCA / Radar':
     header('06  /  ADVANCED ANALYTICS','K-means · PCA · Radar','Khám phá các nhóm điện thoại và so sánh đặc trưng cấu hình.')
     candidates=[c for c in ['Gia_ban','RAM','ROM','Kich_thuoc_man','Do_sang_nits','Cam_sau_MP','Cam_truoc_MP','Khoi_luong'] if c in filtered.columns]
-    features=st.multiselect('Thuộc tính phân cụm',candidates,default=[c for c in ['Gia_ban','RAM','ROM','Kich_thuoc_man'] if c in candidates]); k=st.slider('Số cụm K',2,6,4)
+    features=st.multiselect('Thuộc tính phân cụm',candidates,default=[c for c in ['Gia_ban','RAM','ROM','Kich_thuoc_man','Cam_sau_MP','Cam_truoc_MP','Khoi_luong'] if c in candidates]); k=st.slider('Số cụm K',2,6,4)
     if len(features)<2: st.info('Chọn ít nhất hai thuộc tính số.')
     else:
         try:
@@ -339,9 +329,8 @@ elif page=='K-means / PCA / Radar':
 
             
             analysis = analysis.replace([np.inf, -np.inf], np.nan)
-            analysis = analysis.dropna(subset=features)
+            analysis = analysis.dropna(subset=features, how='all')
 
-            # Loại giá trị RAM và ROM bất thường
             if 'ROM' in features:
                 analysis = analysis[analysis['ROM'].between(1, 2048)]
 
@@ -394,7 +383,7 @@ elif page=='Ước lượng giá':
             if st.button('Ước lượng giá',type='primary',use_container_width=True):
                 pred=float(model.predict(pd.DataFrame([inputs],columns=meta['features']))[0])
                 lo,hi=meta['price_range']['min'],meta['price_range']['max']; pred=min(max(pred,lo),hi)
-                st.success(f'Giá ước lượng: {money(pred)}'); st.caption(f"Sai số trung bình khoảng ±{mt.get('MAPE',0):.0f}% (MAPE trên tập kiểm thử).")
+                st.success(f'Giá ước lượng: {money(pred)}'); st.caption(f"MAPE trung bình trên tập kiểm thử: {mt.get('MAPE',0):.0f}%. Đây không phải khoảng tin cậy cho từng dự đoán.")
         except ImportError: st.error('Thiếu thư viện. Cài bằng: pip install scikit-learn joblib')
         except Exception as e: st.error(f'Không nạp/dùng được mô hình: {e}. Hãy chạy lại python src/train_model.py bằng đúng phiên bản scikit-learn trong requirements.txt.')
 

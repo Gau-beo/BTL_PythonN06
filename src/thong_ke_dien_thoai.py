@@ -33,7 +33,6 @@ def doc_du_lieu(duong_dan: Path) -> pd.DataFrame:
 
 
 def tinh_thong_ke(du_lieu: pd.DataFrame) -> pd.DataFrame:
-    # Nhóm đầu tiên chứa tất cả điện thoại; các nhóm sau là từng hãng.
     cac_nhom = [("all", du_lieu)]
     for ten_hang, du_lieu_cua_hang in du_lieu.groupby("Hang", sort=True):
         cac_nhom.append((ten_hang, du_lieu_cua_hang))
@@ -56,14 +55,12 @@ def tinh_thong_ke(du_lieu: pd.DataFrame) -> pd.DataFrame:
 
 
 def tim_hang_dan_dau(bang_thong_ke: pd.DataFrame) -> pd.DataFrame:
-    # So sánh từng cột Mean/Median giữa các hãng, bỏ dòng tổng hợp all.
     cac_hang = bang_thong_ke[bang_thong_ke["Hang"] != "all"].sort_values("Hang")
     ket_qua = []
     for thuoc_tinh in THUOC_TINH:
         for chi_tieu in ["Mean", "Median"]:
             ten_cot = f"{chi_tieu}_{thuoc_tinh}"
             gia_tri_lon_nhat = cac_hang[ten_cot].max()
-            # So sánh trước khi làm tròn; lấy đủ mọi hãng đồng hạng.
             cac_hang_dan_dau = cac_hang[cac_hang[ten_cot] == gia_tri_lon_nhat]
             for ten_hang in cac_hang_dan_dau["Hang"]:
                 ket_qua.append({
@@ -81,7 +78,6 @@ def tim_top_bottom(du_lieu: pd.DataFrame) -> pd.DataFrame:
     cach_xep_hang = [("Cao_nhat", False), ("Thap_nhat", True)]
 
     for thuoc_tinh in THUOC_TINH:
-        # Chỉ xếp hạng những máy có giá trị của thuộc tính đang xét.
         du_lieu_hop_le = du_lieu.dropna(subset=[thuoc_tinh])
 
         for ten_nhom, sap_xep_tang_dan in cach_xep_hang:
@@ -112,7 +108,6 @@ def tim_top_bottom(du_lieu: pd.DataFrame) -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    # 1. Lấy đường dẫn file đầu vào và thư mục đầu ra từ lệnh chạy.
     parser = argparse.ArgumentParser(
         description="Tinh thong ke, tim hang dan dau Mean/Median va Top/Bottom 3."
     )
@@ -126,13 +121,11 @@ if __name__ == "__main__":
     )
     tham_so = parser.parse_args()
 
-    # 2. Đọc dữ liệu, tính thống kê và tìm hãng dẫn đầu từng thuộc tính.
     du_lieu = doc_du_lieu(tham_so.input_csv)
     bang_thong_ke = tinh_thong_ke(du_lieu)
     bang_hang_dan_dau = tim_hang_dan_dau(bang_thong_ke)
     bang_top_bottom = tim_top_bottom(du_lieu)
 
-    # 3. Lưu mỗi bảng vào một file CSV.
     thu_muc_ket_qua = tham_so.output_dir
     thu_muc_ket_qua.mkdir(parents=True, exist_ok=True)
     cac_file_ket_qua = [

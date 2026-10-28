@@ -19,7 +19,7 @@ features = [
 ]
 
 X = df[features].apply(pd.to_numeric, errors='coerce')
-X = X.fillna(X.median())   # cùng cách điền thiếu với kmeans_pca.py
+X = X.fillna(X.median())
 
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)

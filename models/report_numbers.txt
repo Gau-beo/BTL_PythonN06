@@ -5,6 +5,6 @@ Số hãng: 12
 Khoảng giá: 1,467,900 - 98,700,000 VNĐ quy đổi (giá BDT x 210)
 Tỉ lệ thiếu theo cột (%): Khoi_luong 8.5, Tan_so_quet_Hz 6.9, Cong_suat_sac_W 2.1, Kich_thuoc_man 0.3, Dung_luong_pin 0.3, Cam_sau_MP 0.1, Cam_truoc_MP 0.1, Tam_nen 0.1
 Mô hình được chọn: Gradient Boosting
-  CV R2 = 0.754 ± 0.069
-  Test: R2 = 0.838 | MAE = 2,237,556 | RMSE = 3,772,308 | MAPE = 20.9%
-  RMSE / MAE = 1.69
+  CV R2 = 0.752 ± 0.087
+  Test: R2 = 0.833 | MAE = 2,250,463 | RMSE = 3,826,342 | MAPE = 21.1%
+  RMSE / MAE = 1.70

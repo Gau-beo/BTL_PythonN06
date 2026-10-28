@@ -50,7 +50,6 @@ def slugify(value):
     return re.sub(r"[^A-Za-z0-9]+", "_", text).strip("_").lower()[:120]
 
 
-# Chỉ giữ các mẫu điện thoại duy nhất
 phones = df[[name_col, brand_col]].drop_duplicates()
 results = []
 
@@ -63,7 +62,6 @@ for _, row in phones.iterrows():
 
     filename = slugify(name)
 
-    # Kiểm tra xem ảnh có tồn tại với tên mà app.py sử dụng không
     existing = [
         IMAGE_DIR / f"{filename}.{ext}"
         for ext in ["jpg", "jpeg", "png", "webp"]

@@ -1,19 +1,3 @@
-"""
-Vẽ HISTOGRAM cho từng thuộc tính số của bộ dữ liệu điện thoại:
-  - 1 ảnh "toàn bộ dữ liệu" cho mỗi thuộc tính
-  - 1 ảnh "theo từng hãng" (lưới subplot, mỗi hãng một ô) cho mỗi thuộc tính
-  - (tuỳ chọn --moi-hang-mot-anh) mỗi hãng một file ảnh riêng
-
-Cách chạy (từ thư mục gốc của repo):
-    python src/ve_histogram.py
-    python src/ve_histogram.py --csv data/data_clean.csv --out figures
-    python src/ve_histogram.py --moi-hang-mot-anh
-
-Kết quả:
-    figures/histogram/all/<thuoc_tinh>_all.png
-    figures/histogram/theo_hang/<thuoc_tinh>_theo_hang.png
-    figures/histogram/moi_hang/<thuoc_tinh>/<hang>.png   (nếu dùng --moi-hang-mot-anh)
-"""
 import argparse
 import os
 from pathlib import Path
@@ -25,7 +9,6 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-# (tên cột, nhãn tiếng Việt, đơn vị, kiểu: "cont" liên tục / "disc" rời rạc, số bin)
 THUOC_TINH = [
     ("Gia_ban_trieu", "Giá bán", "triệu VND", "cont", 30),
     ("RAM", "RAM", "GB", "disc", None),
@@ -48,7 +31,6 @@ sns.set_theme(style="whitegrid", rc={
 
 
 def tl(nhan):
-    """Viết thường nhãn khi chèn giữa câu, trừ từ viết tắt (RAM)."""
     return nhan if nhan.startswith("RAM") else nhan.lower()
 
 
@@ -57,7 +39,6 @@ def slug(s):
 
 
 def chuan_bi_bins(s_all, kind, nbins):
-    """Tính bin CHUNG cho toàn bộ dữ liệu để các hãng so sánh được với nhau."""
     if kind == "disc":
         gia_tri = np.sort(s_all.unique())
         return gia_tri, np.arange(-0.5, len(gia_tri) + 0.5, 1)
@@ -65,14 +46,13 @@ def chuan_bi_bins(s_all, kind, nbins):
 
 
 def ve_hist(ax, s, kind, gia_tri, bins, hien_trung_vi=True):
-    """Vẽ histogram lên 1 trục bằng ax.hist."""
     if len(s) == 0:
         ax.text(0.5, 0.5, "Không có dữ liệu", transform=ax.transAxes,
                 ha="center", va="center", color=MUTED)
         ax.set_xticks([]); ax.set_yticks([])
         return
     if kind == "disc":
-        vi_tri = np.searchsorted(gia_tri, s.values)       # đổi giá trị -> vị trí 0..k-1
+        vi_tri = np.searchsorted(gia_tri, s.values)
         ax.hist(vi_tri, bins=bins, color=BLUE, edgecolor="white", linewidth=0.8)
         ax.set_xticks(range(len(gia_tri)))
         ax.set_xticklabels([f"{v:g}" for v in gia_tri], fontsize=8)
@@ -103,17 +83,15 @@ def main():
 
     df = pd.read_csv(args.csv, encoding="utf-8-sig")
     df["Gia_ban_trieu"] = df["Gia_ban"] / 1e6
-    hang_list = df["Hang"].value_counts().index.tolist()   # sắp theo số mẫu giảm dần
+    hang_list = df["Hang"].value_counts().index.tolist()
     print(f"Đọc {len(df)} dòng, {len(hang_list)} hãng")
 
     for col, nhan, don_vi, kind, nbins in THUOC_TINH:
-        # giá trị "N/a" -> NaN -> bỏ
         df[col] = pd.to_numeric(df[col], errors="coerce")
         s_all = df[col].dropna()
         gia_tri, bins = chuan_bi_bins(s_all, kind, nbins)
         ten = f"{nhan} ({don_vi})"
 
-        # ---- (1) Toàn bộ dữ liệu ----
         fig, ax = plt.subplots(figsize=(9, 6))
         ve_hist(ax, s_all, kind, gia_tri, bins)
         ax.set_title(f"Phân bố {tl(nhan)} – toàn bộ dữ liệu", fontsize=15,
@@ -125,7 +103,6 @@ def main():
         fig.tight_layout()
         luu(fig, os.path.join(args.out, "histogram", "all", f"{slug(col)}_all.png"))
 
-        # ---- (2) Theo từng hãng: lưới subplot ----
         n = len(hang_list)
         ncols = 4
         nrows = int(np.ceil(n / ncols))
@@ -146,7 +123,6 @@ def main():
         fig.tight_layout(rect=[0, 0, 1, 0.96])
         luu(fig, os.path.join(args.out, "histogram", "theo_hang", f"{slug(col)}_theo_hang.png"))
 
-        # ---- (3) Tuỳ chọn: mỗi hãng một ảnh ----
         if args.moi_hang_mot_anh:
             for hang in hang_list:
                 s = df.loc[df["Hang"] == hang, col].dropna()

@@ -82,7 +82,7 @@ Silhouette khi chạy `evaluate_clusters.py`: k=2: 0,319; k=3: 0,306; **k=4: 0,3
 
 ### Mô hình ước lượng giá
 
-Gradient Boosting (chọn theo CV R2): CV R2 = 0,754 +- 0,069; trên tập kiểm thử R2 = 0,838, MAE ~ 2,24 triệu VNĐ, MAPE ~ 20,9%. Trang web "Ước lượng giá" nạp đúng mô hình này từ `models/`, nên số liệu web và báo cáo khớp nhau. Nếu `scikit-learn` trên máy khác phiên bản trong `requirements.txt`, hãy chạy lại `python src/train_model.py`.
+Gradient Boosting (chọn theo CV R2): CV R2 = 0,752 +- 0,087; trên tập kiểm thử R2 = 0,833, MAE ~ 2,25 triệu VNĐ, MAPE ~ 21,1%. Trang web "Ước lượng giá" nạp đúng mô hình này từ `models/`, nên số liệu web và báo cáo khớp nhau. Nếu `scikit-learn` trên máy khác phiên bản trong `requirements.txt`, hãy chạy lại `python src/train_model.py`.
 
 ## Lưu ý về dữ liệu và giá (nên ghi trong báo cáo)
 
@@ -90,3 +90,9 @@ Gradient Boosting (chọn theo CV R2): CV R2 = 0,754 +- 0,069; trên tập kiể
 - Một phần giá là loại "Expected" (giá dự kiến), chưa phải giá bán thật; có cả máy chưa phát hành.
 - Giá lấy mức thấp nhất trong các phiên bản, còn RAM/ROM lấy từ phiên bản đầu tiên, nên một số máy có thể chưa khớp cấu hình.
 - `phones.csv` hiện **không có Xiaomi/Poco/Redmi** do bản cào cũ giới hạn 3000 máy theo thứ tự URL. Xem cách bổ sung ở bảng "Cách chạy". Sau khi bổ sung cần chạy lại toàn bộ các bước từ `process.py`.
+
+## Bản sửa kỹ thuật
+
+Giữ nguyên 1.050 máy, không cào thêm. QuantileClipper học ngưỡng trong từng fold huấn luyện. Khi sao chép mô hình, giữ cả src/model_utils.py; app.py đã thiết lập đường dẫn nạp. Radar báo lỗi khi tên không duy nhất hoặc thiếu thông số. Trang phân cụm mặc định dùng 7 đặc trưng như script.
+
+Trên Windows, chạy lệnh bằng `python -X utf8` để log tiếng Việt không lỗi mã hóa. Môi trường đã kiểm tra: Python 3.13, các phiên bản thư viện trong requirements.txt.
