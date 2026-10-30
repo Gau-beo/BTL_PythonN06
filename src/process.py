@@ -8,6 +8,9 @@ GOC = Path(__file__).resolve().parents[1]
 FILE_VAO = GOC / "data" / "phones.csv"
 FILE_RA = GOC / "data" / "data_clean.csv"
 
+FILE_RA = GOC / "data" / "test"/ "data_clean.csv"
+FILE_VAO = GOC / "data" / "test" / "phones_crawled.csv"
+
 NAM_MIN, NAM_MAX = 2023, 2026
 TY_GIA_BDT_VND = 210
 LOAI_THIET_BI = {"Smartphones", "Mobiles"}
@@ -153,9 +156,15 @@ def main():
     out["Tan_so_quet_Hz"] = (df["Display.Type"].fillna("") + " " + df["Display.Features"].fillna("")).apply(tan_so_quet)
     out["Tam_nen"] = df["Display.Type"].apply(tam_nen)
     out["Do_phan_giai"] = df["Display.Resolution"].apply(do_phan_giai)
-    cam_sau = df["Main camera.Single"].fillna(df["Main camera.Dual"]).fillna(df["Main camera.Triple"]).fillna(df["Main camera.Quad"])
+    cam_sau = df.reindex(columns=[
+        "Main camera.Single", "Main camera.Dual",
+        "Main camera.Triple", "Main camera.Quad",
+    ]).bfill(axis=1).iloc[:, 0]
+    cam_truoc = df.reindex(columns=[
+        "Selfie camera.Single", "Selfie camera.Dual",
+    ]).bfill(axis=1).iloc[:, 0]
     out["Cam_sau_MP"] = cam_sau.apply(max_mp)
-    out["Cam_truoc_MP"] = df["Selfie camera.Single"].fillna(df["Selfie camera.Dual"]).apply(max_mp)
+    out["Cam_truoc_MP"] = cam_truoc.apply(max_mp)
     out["Khoi_luong"] = trich(df["Body.Weight"], r"(\d+(?:\.\d+)?)\s*g\b")
     out["URL"] = df["URL"]
 

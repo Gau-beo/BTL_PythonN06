@@ -16,8 +16,14 @@ ROOT = Path(__file__).resolve().parents[1]
 INPUT_FILE = ROOT / "data" / "data_clean.csv"
 OUTPUT_FILE = ROOT / "data" / "phones_kmeans.csv"
 MODEL_DIR = ROOT / "models"
-MODEL_FILE = MODEL_DIR / "kmeans_pca.pkl"
 FIGURE_DIR = ROOT / "figures"
+
+#INPUT_FILE = ROOT / "data" / "test" / "data_clean.csv"
+#OUTPUT_FILE = ROOT / "data" / "test" / "phones_kmeans.csv"
+#MODEL_DIR = ROOT / "data" / "test" / "models"
+#FIGURE_DIR = ROOT / "data" / "test" / "figures"
+
+MODEL_FILE = MODEL_DIR / "kmeans_pca.pkl"
 FIGURE_FILE = FIGURE_DIR / "kmeans_pca.png"
 
 FEATURES = [

@@ -6,7 +6,13 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-df = pd.read_csv(ROOT / "data" / "data_clean.csv")
+INPUT_FILE = ROOT / "data" / "data_clean.csv"
+FIGURE_DIR = ROOT / "figures"
+
+#INPUT_FILE = ROOT / "data" / "test" / "data_clean.csv"
+#FIGURE_DIR = ROOT / "data" / "test" / "figures"
+
+df = pd.read_csv(INPUT_FILE)
 
 features = [
     "Gia_ban",
@@ -35,7 +41,6 @@ for k in K_range:
     silhouette_scores.append(silhouette_score(X_scaled, kmeans.labels_))
     print(f"k={k}: WCSS={kmeans.inertia_:.0f}  silhouette={silhouette_scores[-1]:.3f}")
 
-FIGURE_DIR = ROOT / "figures"
 FIGURE_DIR.mkdir(parents=True, exist_ok=True)
 
 plt.figure(figsize=(8, 5))
