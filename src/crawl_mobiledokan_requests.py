@@ -13,11 +13,12 @@ DEFAULT_BRANDS = [
     "apple", "samsung", "xiaomi", "oppo", "vivo", "realme", "honor",
     "motorola", "nokia", "tecno", "infinix", "itel", "tcl",
 ]
-LIMIT = None
+LIMIT = None          # Mặc định không giới hạn số máy; dùng --limit để đặt giới hạn.
 TOTAL_PAGES = 60
-DELAY = 1.5
+DELAY = 0.1
 OUTPUT = ROOT / "data" / "raw" / "phones_crawled.csv"
 
+OUTPUT = ROOT / "data" / "test" / "phones_crawled.csv"
 
 def fetch_soup(session, url):
     response = session.get(url, timeout=25)
@@ -26,7 +27,10 @@ def fetch_soup(session, url):
     return BeautifulSoup(response.content, "html.parser")
 
 
-def collect_urls(session, brands=None):
+def collect_urls(session, brands=None, url_limit=None):
+    """Gom URL duy nhất; dừng toàn bộ khi đạt url_limit nếu được đặt."""
+    if url_limit is not None and url_limit <= 0:
+        raise ValueError("Giới hạn URL phải lớn hơn 0.")
     urls = set()
     for brand in (brands or DEFAULT_BRANDS):
         url = f"{BASE}/brand/{brand}/"
@@ -45,6 +49,9 @@ def collect_urls(session, brands=None):
                             and target.netloc in {"www.mobiledokan.co", "mobiledokan.co"}
                             and target.path.startswith("/product/")):
                         urls.add(f"{BASE}{target.path.rstrip('/')}/")
+                        if url_limit is not None and len(urls) >= url_limit:
+                            print(f"Đã gom đủ {len(urls)} URL, dừng gom.", flush=True)
+                            return urls
                 next_link = soup.select_one('a.next.page-numbers[href], a[rel="next"][href]')
                 next_url = urljoin(url, next_link["href"]) if next_link else None
                 url = (next_url if next_url
@@ -112,15 +119,19 @@ def save_csv(rows, path=OUTPUT):
 def main():
     ap = argparse.ArgumentParser(description="Cào thông số điện thoại từ MobileDokan")
     ap.add_argument("--brands", help="Danh sách hãng, cách nhau bằng dấu phẩy (mặc định: tất cả)")
-    ap.add_argument("--limit", type=int, default=LIMIT, help="Số máy tối đa (mặc định: không giới hạn)")
+    ap.add_argument("--url-limit", type=int, default=None,
+                    help="Số URL duy nhất tối đa trên tất cả hãng (mặc định: không giới hạn)")
+    ap.add_argument("--limit", type=int, default=LIMIT, help=f"Số máy tối đa (mặc định: {LIMIT})")
     ap.add_argument("--out", type=Path, default=OUTPUT, help="File CSV đầu ra")
     args = ap.parse_args()
+    if args.url_limit is not None and args.url_limit <= 0:
+        ap.error("--url-limit phải lớn hơn 0")
     brands = [b.strip().lower() for b in args.brands.split(",")] if args.brands else None
     rows = []
     with requests.Session() as session:
         session.headers.update({"User-Agent": "PhoneSpecsResearch/1.0"})
         try:
-            crawl_phones(session, collect_urls(session, brands), rows, args.limit)
+            crawl_phones(session, collect_urls(session, brands, url_limit=args.url_limit), rows, args.limit)
         except KeyboardInterrupt:
             print("Đã dừng")
         finally:

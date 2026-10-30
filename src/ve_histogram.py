@@ -25,6 +25,15 @@ THUOC_TINH = [
 
 INK, MUTED, GRID, BLUE, MED = "#1f2937", "#6b7280", "#e5e7eb", "#3b6fb6", "#c2410c"
 ROOT = Path(__file__).resolve().parents[1]
+
+# Đường dẫn mặc định.
+FILE_DU_LIEU = ROOT / "data" / "data_clean.csv"
+THU_MUC_KET_QUA = ROOT / "figures"
+
+# Demo: bỏ dấu # ở hai dòng dưới để ghi đè đường dẫn mặc định.
+FILE_DU_LIEU = ROOT / "data" / "test" / "data_clean.csv"
+THU_MUC_KET_QUA = ROOT / "data" / "test" / "figures"
+
 sns.set_theme(style="whitegrid", rc={
     "font.family": "DejaVu Sans", "axes.edgecolor": "#9ca3af", "grid.color": GRID,
     "axes.labelcolor": INK, "text.color": INK, "xtick.color": MUTED, "ytick.color": MUTED})
@@ -75,8 +84,8 @@ def luu(fig, path):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--csv", default=str(ROOT / "data" / "data_clean.csv"))
-    ap.add_argument("--out", default=str(ROOT / "figures"))
+    ap.add_argument("--csv", default=str(FILE_DU_LIEU))
+    ap.add_argument("--out", default=str(THU_MUC_KET_QUA))
     ap.add_argument("--moi-hang-mot-anh", action="store_true",
                     help="lưu thêm mỗi hãng một file ảnh riêng")
     args = ap.parse_args()

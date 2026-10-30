@@ -6,6 +6,14 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
+ROOT = Path(__file__).resolve().parents[1]
+INPUT_FILE = ROOT / "data" / "phones_kmeans.csv"
+OUTPUT_FILE = ROOT / "figures" / "radar_chart.png"
+
+# Demo: bỏ dấu # ở hai dòng dưới để ghi đè đường dẫn mặc định.
+#INPUT_FILE = ROOT / "data" / "test" / "phones_kmeans.csv"
+#OUTPUT_FILE = ROOT / "data" / "test" / "figures" / "radar_chart.png"
+
 
 FEATURES = [
     "Gia_ban",
@@ -35,7 +43,7 @@ FEATURE_LABELS = {
 def plot_cluster_radar(
     df: pd.DataFrame,
     cluster_col: str = "Cluster",
-    output_path: str = "figures/radar_chart.png",
+    output_path: str = str(OUTPUT_FILE),
 ) -> Path:
     if cluster_col not in df.columns:
         raise ValueError(
@@ -119,7 +127,7 @@ def main():
     )
     parser.add_argument(
         "--input",
-        default="data/phones_kmeans.csv",
+        default=str(INPUT_FILE),
         help="Đường dẫn CSV kết quả phân cụm.",
     )
     parser.add_argument(
@@ -129,7 +137,7 @@ def main():
     )
     parser.add_argument(
         "--output",
-        default="figures/radar_chart.png",
+        default=str(OUTPUT_FILE),
         help="Đường dẫn lưu ảnh PNG.",
     )
     args = parser.parse_args()

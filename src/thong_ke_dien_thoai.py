@@ -16,8 +16,12 @@ THUOC_TINH = [
     "Khoi_luong",
 ]
 THU_MUC_DU_AN = Path(__file__).resolve().parents[1]
+# Đường dẫn mặc định.
 FILE_DU_LIEU = THU_MUC_DU_AN / "data" / "data_clean.csv"
 THU_MUC_KET_QUA = THU_MUC_DU_AN / "data"
+
+FILE_DU_LIEU = THU_MUC_DU_AN / "data" / "test" / "data_clean.csv"
+THU_MUC_KET_QUA = THU_MUC_DU_AN / "data" / "test"
 
 
 def doc_du_lieu(duong_dan: Path) -> pd.DataFrame:
@@ -113,7 +117,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "input_csv", type=Path, nargs="?", default=FILE_DU_LIEU,
-        help="Duong dan CSV dau vao; mac dinh: data/data_clean.csv.",
+        help=f"Duong dan CSV dau vao; mac dinh: {FILE_DU_LIEU}.",
     )
     parser.add_argument(
         "-o", "--output-dir", type=Path, default=THU_MUC_KET_QUA,

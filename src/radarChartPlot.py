@@ -9,6 +9,11 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CSV = ROOT / "data" / "data_clean.csv"
+DEFAULT_OUTPUT = ROOT / "figures" / "radar_2may.png"
+
+# Demo: bỏ dấu # ở hai dòng dưới để ghi đè đường dẫn mặc định.
+#DEFAULT_CSV = ROOT / "data" / "test" / "data_clean.csv"
+#DEFAULT_OUTPUT = ROOT / "data" / "test" / "figures" / "radar_2may.png"
 
 
 def tim_may(df, ten):
@@ -30,7 +35,7 @@ def main():
     ap.add_argument("--Attribute", required=True,
                     help="Danh sách thuộc tính, cách nhau bằng dấu phẩy (vd: RAM,ROM,Gia_ban)")
     ap.add_argument("--input", type=Path, default=DEFAULT_CSV)
-    ap.add_argument("--output", type=Path, default=ROOT / "figures" / "radar_2may.png")
+    ap.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     a = ap.parse_args()
 
     df = pd.read_csv(a.input, encoding="utf-8-sig", na_values=["N/a"])

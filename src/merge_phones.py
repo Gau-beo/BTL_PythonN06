@@ -6,6 +6,9 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 PHONES = ROOT / "data" / "phones.csv"
 
+# Demo: bỏ dấu # ở dòng dưới để gộp vào file dữ liệu thô của luồng demo.
+# PHONES = ROOT / "data" / "test" / "phones_crawled.csv"
+
 
 def main():
     if len(sys.argv) < 2:
@@ -17,7 +20,7 @@ def main():
     merged = merged.drop_duplicates(subset=["URL"], keep="first")
     cols = ["URL", "Ten_may", "Gia_ban"] + [c for c in merged.columns if c not in ("URL", "Ten_may", "Gia_ban")]
     merged[cols].to_csv(PHONES, index=False, encoding="utf-8-sig")
-    print(f"phones.csv: {n0} -> {len(merged)} dòng. Hãy chạy lại: python src/process.py")
+    print(f"{PHONES.name}: {n0} -> {len(merged)} dòng. Hãy chạy lại: python src/process.py")
 
 
 if __name__ == "__main__":
